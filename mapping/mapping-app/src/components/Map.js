@@ -4,6 +4,8 @@ import { scaleLinear } from "d3-scale";
 
 import InfoBox from './InfoBox';
 import ScaleBar from './ScaleBar';
+import { Button } from './Input';
+import getData from '../data.js';
 
 
 import {
@@ -12,8 +14,6 @@ import {
   Geographies,
   Geography,
 } from 'react-simple-maps'
-
-import getData from '../data.js';
 
 const HIGHCOLOR = '#F3F9FE'
 const MIDCOLOR = '#2769d4'
@@ -25,50 +25,53 @@ const colorScale = scaleLinear()
 
 
 const mapBox = {
- backgroundColor: '#cecece',
+ backgroundColor: '#FFF',
  width: 'fit-content',
  margin: '0 auto',
  color: '#313131',
-}
-
-
-export class MapControls extends Component {
-  constructor() {
-    super()
-  } 
-
-
-  render() {
-    return(
-      <select onChange={this.props.changeMapData}>
-        <option value={"www1"}> Internet usage </option>
-        <option value={"pol1"}> Interest in politics</option>
-        <option value={"indig"}> Indigineous population </option>
-      </select>)
-  }
+ borderRadius: '7px',
+ boxShadow: 'black 2px 2px 15px'
 }
 
 export class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      zoom: 1.2,
+      zoom: 1.5,
       view: 1, // 0 for department view and 1 for municipality view 
       dept: '',
       muni: '',
       data: null,
-      mapDataCategory: 'indig', 
+      dataCode: this.props.code, 
+      forceUpdate: false,  
     }
   }
 
   toggleView = () => {
     this.setState( (prevState, props) => {
       const newView = prevState.view ^= 1 //toggles between 1 and 0 w/ an XOR
-      return {view: newView} 
+      return {view: newView,}
     })
   }
+  
 
-  changeMapData = (e) => this.setState({ mapDataCategory: e.target.value })
+  componentWillReceiveProps = (props) => {
+    if (props.code != this.props.dataCode){
+      this.setState({
+        dataCode: this.props.code,
+        forceUpdate: true,
+      })
+    }
+  }
+
+
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if(this.state.forceUpdate){
+      this.setState({
+        forceUpdate: false
+      })
+    }
+  }
 
   geoFile = () => 'GT_' + this.state.view + '.json'
 
@@ -104,12 +107,13 @@ export class Map extends Component {
   render() {
     return(
       <div style={mapBox}>
-        <div style={{padding: '10px'}}> 
-          <button style={{marginRight: '5px'}} onClick={ this.toggleView}> 
-            {this.state.view ? 'Department view': 'Municipality view'} 
-          </button>
-          <button onClick= { this.handleZoomIn }> + </ button>
-          <button onClick= { this.handleZoomOut }> - </ button>
+        <div style={{padding: '10px', display: 'flex'}}> 
+          <Button 
+            callback={ this.toggleView } 
+            text= {this.state.view ? 'Department view': 'Municipality view'} 
+            /> 
+          <Button callback={ this.handleZoomIn } text={ '+' } /> 
+          <Button callback={ this.handleZoomOut } text={ '-' } /> 
         </div>
         <hr style={{margin: '0'}}/>
         <div>  
@@ -120,29 +124,30 @@ export class Map extends Component {
               municipality={ this.state.muni}/> 
             : null
           }
-          <ScaleBar highColor={HIGHCOLOR} lowColor={LOWCOLOR}/>
-          <ComposableMap width={500} height={500} projectionConfig={{
+          <ComposableMap width={600} height={600} projectionConfig={{
               scale: 6000,
               xOffset: 3506,
               yOffset: 710,
-              width: 20,
           }}>
             <ZoomableGroup zoom={ this.state.zoom }>
-            <Geographies geography={this.geoFile()} > 
+            <Geographies 
+              geography={ this.geoFile() } 
+              disableOptimization={ this.state.forceUpdate }
+            > 
               {(geographies, projection) => geographies.map((geography, i) => {
                 geography.properties['data'] = getData(geography.properties) 
                 return(
                   <Geography
                     key={ geography.id }
-                    cacheId={ geography.id }
                     geography={ geography }
+                    cacheId={ 'geography-' + i + this.state.view + this.props.code}
                     projection={ projection }
                     onClick={ this.handleClick }
                     onMouseOver={ (e) => this.handleMouseOver(e, geography.properties)}
                     onWheel={ this.handleWheel }
                     style = {{
                       default: { 
-                        fill: colorScale(geography.properties.data[this.state.mapDataCategory]),
+                        fill: colorScale(geography.properties.data[this.props.code]),
                         stroke: "#000",
                         strokeWidth: "0.2",
                         outline: "none",
