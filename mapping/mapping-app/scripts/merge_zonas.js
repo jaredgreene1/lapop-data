@@ -1,4 +1,4 @@
-const geoData = require('./GT_1.json')
+const geoData = require('../public/GT_1.json')
 const topojson = require('topojson')
 const fs = require('fs')
 
