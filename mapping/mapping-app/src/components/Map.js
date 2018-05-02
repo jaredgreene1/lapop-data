@@ -5,8 +5,8 @@ import { scaleLinear } from "d3-scale";
 import InfoBox from './InfoBox';
 import ScaleBar from './ScaleBar';
 import { Button } from './Input';
-import getData from '../data.js';
-
+import getData from '../data/data.js';
+import { codes17 } from '../data/varcoding';
 
 import {
   ComposableMap,
@@ -15,14 +15,9 @@ import {
   Geography,
 } from 'react-simple-maps'
 
+const LOWCOLOR  = '#005eb1'
+const MIDCOLOR  = '#2769d4'
 const HIGHCOLOR = '#F3F9FE'
-const MIDCOLOR = '#2769d4'
-const LOWCOLOR = '#005eb1'
-
-const colorScale = scaleLinear()
-  .domain([0, .5, 1])
-  .range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
-
 
 const mapBox = {
  backgroundColor: '#FFF',
@@ -32,6 +27,8 @@ const mapBox = {
  borderRadius: '7px',
  boxShadow: 'black 2px 2px 15px'
 }
+
+var count = 0
 
 export class Map extends Component {
   constructor(props) {
@@ -55,15 +52,21 @@ export class Map extends Component {
   }
   
 
-  componentWillReceiveProps = (props) => {
-    if (props.code != this.props.dataCode){
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.code != this.state.dataCode){
       this.setState({
-        dataCode: this.props.code,
+        dataCode: nextProps.code,
         forceUpdate: true,
       })
     }
   }
 
+  colorScale = () => scaleLinear()
+    .domain([
+      codes17[this.state.dataCode].low, 
+      (codes17[this.state.dataCode].high - codes17[this.state.dataCode].low)/(2.0), 
+      codes17[this.state.dataCode].high, 
+    ]).range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
     if(this.state.forceUpdate){
@@ -124,7 +127,7 @@ export class Map extends Component {
               municipality={ this.state.muni}/> 
             : null
           }
-          <ComposableMap width={600} height={600} projectionConfig={{
+          <ComposableMap width={700} height={600} projectionConfig={{
               scale: 6000,
               xOffset: 3506,
               yOffset: 710,
@@ -147,7 +150,7 @@ export class Map extends Component {
                     onWheel={ this.handleWheel }
                     style = {{
                       default: { 
-                        fill: colorScale(geography.properties.data[this.props.code]),
+                        fill: this.colorScale()(geography.properties.data[this.props.code]),
                         stroke: "#000",
                         strokeWidth: "0.2",
                         outline: "none",
