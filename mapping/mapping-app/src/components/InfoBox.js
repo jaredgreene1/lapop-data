@@ -7,7 +7,7 @@ const box = {
   paddingRight: '4px',
   width: 'fit-content',
   position: 'absolute',
-  background: '#9e9e9ed9',
+  background: '#797575d9',
   color: 'white',
   fontSize: '11px',
 }
