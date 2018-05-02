@@ -9,7 +9,7 @@ const box = {
   position: 'absolute',
   background: '#797575d9',
   color: 'white',
-  fontSize: '11px',
+  fontSize: '16px',
 }
 
 class InfoBox extends Component {
@@ -25,9 +25,10 @@ class InfoBox extends Component {
         { this.props.municipality ? 
           <p> <b> Municipality: </b> {this.props.municipality} </p> : null
         }
-        <p> <b> Indigenous population: </b> { (this.props.data.indig*100).toFixed(1) + '%' } </p>
+        <p> <b> Indigenous pop.: </b> { (this.props.data.indig*100).toFixed(1) + '%' } </p>
         <p> <b> Internet Usage: </b> { (this.props.data.www1*1).toFixed(1)} </p>
         <p> <b> Political interest: </b> { (this.props.data.pol1*1).toFixed(1)} </p>
+        <p> <b> Protest particip.: </b> { (this.props.data.prot3*1).toFixed(1) + '%'} </p>
       </div>
     )
   }

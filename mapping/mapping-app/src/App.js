@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Map, MapControls } from './components/Map.js';
 import { Start } from './components/Start';
 
-import background from './background.svg';
+import background from './background_blue.jpeg';
 
 const section1 = {
   backgroundImage: "url(" + background + ")",
   padding: '30px',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  height: '95vh',
+  minHeight: '95vh',
   color: 'white',
   padding: '15px',
 }
@@ -61,9 +61,6 @@ class App extends Component {
           </div>
         </section>
         <section name='section2'>
-          <div style={{height:'100vh', background:'grey'}}>
-            <h1> SO HOW DOES THIS WORK? </h1>
-          </div>
         </section>
       </div>
 

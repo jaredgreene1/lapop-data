@@ -150,21 +150,18 @@ def clean(data, grouping=None):
 
 
 def load(path):
-  '''Accepts path to stata file and returns pandas table'''
-  #NOTE: Had to clean the file by changing one of the 'La Libertads to La Libertad2 to make this read work'
+  '''Accepts path to stata file and returns full pandas table'''
   data = pd.read_stata(path) 
   return data
 
 
 def get_data(grouping=None, year='2017'):
+  '''Accepts optional parameters grouping and year.
+      - loads, cleans, and returns data
+  '''
   df = data_files[year] 
   data = load(df)
   return clean(data, grouping)
-
-
-def main():
-  return load_data()
-
 
 if __name__ == '__main__':
   main()
