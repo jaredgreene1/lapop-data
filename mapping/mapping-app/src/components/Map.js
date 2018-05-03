@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 import { scaleLinear } from "d3-scale";
-
+import { Button } from 'react-bootstrap';
 import InfoBox from './InfoBox';
-import ScaleBar from './ScaleBar';
-import { Button } from './Input';
-import getData from '../data/data.js';
+import { getDataByLocation } from '../data/data.js';
 import { codes17 } from '../data/varcoding';
 
 import {
@@ -25,10 +23,8 @@ const mapBox = {
  margin: '0 auto',
  color: '#313131',
  borderRadius: '7px',
- boxShadow: 'black 2px 2px 15px'
 }
 
-var count = 0
 
 export class Map extends Component {
   constructor(props) {
@@ -109,48 +105,47 @@ export class Map extends Component {
 
   render() {
     return(
-      <div style={mapBox}>
+      <div>
+        <h1> {codes17[this.state.dataCode].label} </h1>
         <div style={{padding: '10px', display: 'flex'}}> 
-          <Button 
-            callback={ this.toggleView } 
-            text= {this.state.view ? 'Department view': 'Municipality view'} 
-            /> 
-          <Button callback={ this.handleZoomIn } text={ '+' } /> 
-          <Button callback={ this.handleZoomOut } text={ '-' } /> 
-        </div>
-        <hr style={{margin: '0'}}/>
-        <div>  
-          {this.state.dept ? 
-            <InfoBox 
-              data={ this.state.data }
-              department={ this.state.dept }
-              municipality={ this.state.muni}/> 
-            : null
-          }
-          <ComposableMap width={700} height={600} projectionConfig={{
-              scale: 6000,
-              xOffset: 3506,
-              yOffset: 710,
-          }}>
-            <ZoomableGroup zoom={ this.state.zoom }>
-            <Geographies 
-              geography={ this.geoFile() } 
-              disableOptimization={ this.state.forceUpdate }
-            > 
-              {(geographies, projection) => geographies.map((geography, i) => {
-                geography.properties['data'] = getData(geography.properties) 
+          <Button onClick={ this.toggleView } > 
+            {this.state.view ? 'Department view': 'Municipality view'} 
+          </Button>
+          <Button active={true} bsSize={'small'} onClick={ this.handleZoomIn }> { '+' } </Button> 
+            <Button bsSize={'lg'} onClick={ this.handleZoomOut }> { '-' } </Button> 
+          </div>
+          <div>  
+            {this.state.dept ? 
+              <InfoBox 
+                data={ this.state.data }
+                department={ this.state.dept }
+                municipality={ this.state.muni}/> 
+              : null
+            }
+            <ComposableMap width={500} height={500} projectionConfig={{
+                scale: 6000,
+                xOffset: 3506,
+                yOffset: 710,
+            }}>
+              <ZoomableGroup zoom={ this.state.zoom }>
+              <Geographies 
+                geography={ this.geoFile() } 
+                disableOptimization={ this.state.forceUpdate }
+              > 
+                {(geographies, projection) => geographies.map((geography, i) => {
+                geography.properties['data'] = getDataByLocation(geography.properties) 
                 return(
                   <Geography
                     key={ geography.id }
                     geography={ geography }
-                    cacheId={ 'geography-' + i + this.state.view + this.props.code}
+                    cacheId={ 'geography-' + i + this.state.view + this.state.dataCode}
                     projection={ projection }
                     onClick={ this.handleClick }
                     onMouseOver={ (e) => this.handleMouseOver(e, geography.properties)}
                     onWheel={ this.handleWheel }
                     style = {{
                       default: { 
-                        fill: this.colorScale()(geography.properties.data[this.props.code]),
+                        fill: this.colorScale()(geography.properties.data[this.state.dataCode]),
                         stroke: "#000",
                         strokeWidth: "0.2",
                         outline: "none",

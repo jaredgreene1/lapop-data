@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Map, MapControls } from './components/Map.js';
-import { Start } from './components/Start';
+import ScatterChart from './components/Scatter.js';
+import { InputPanel } from './components/InputPanel';
+
+import { OutputPanel } from './components/OutputPanel.js';
 
 import background from './background_blue.jpeg';
 
@@ -14,34 +17,17 @@ const section1 = {
   padding: '15px',
 }
 
-const dataInterface = {
-  display: 'flex',
-  flexWrap: 'wrap',
-}
-
-const controls = {
-  display: 'flex',
-  margin: '10px',
-  flexGrow: '2',
-
-}
-
-const output = {
-  display: 'flex',
-  margin: '10px',
-  flexGrow: '5'
-}
-
 class App extends Component {
   constructor() {
     super()
     this.state ={
-      depvar: '',
-      indepvar: '',
+      depVar: 'prot3',
+      indepVar: 'prot3',
   }
 }
 
-  setDepVar = (e) => this.setState({ depvar: e.target.value})
+  setDepVar = (e) => this.setState({ depVar: e.target.value})
+  setIndepVar = (e) => this.setState({ indepVar: e.target.value})
 
 
   render() {
@@ -49,15 +35,10 @@ class App extends Component {
       <div>
         <section name='section1' style={ section1 }>
           <h1> LAPOP Explorer - Guatemala </h1>
-          <p> Application for exploring LAPOP data for Guatemala </p>
           <hr />
-          <div style={ dataInterface }> 
-            <div name='controls' style={ controls }>
-              <Start setDepVar={ this.setDepVar }/>
-            </div>
-            <div name='output' style={ output }>
-              {this.state.depvar ? <Map code={ this.state.depvar }/> : null}  
-            </div>
+          <div style={{display: 'flex', flexWrap:'wrap'}}> 
+            <InputPanel setDepVar={ this.setDepVar } setIndepVar={ this.setIndepVar }/>
+            <OutputPanel depVar={ this.state.depVar } indepVar={ this.state.indepVar }/> 
           </div>
         </section>
         <section name='section2'>

@@ -9,7 +9,7 @@ const box = {
   position: 'absolute',
   background: '#797575d9',
   color: 'white',
-  fontSize: '16px',
+  fontSize: '12px',
 }
 
 class InfoBox extends Component {
