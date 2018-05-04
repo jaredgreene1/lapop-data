@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Scatter } from 'react-chartjs-2';
-import { getData } from '../data/data';
-
-const munis = getData('municipio').municipio
 
 export class ScatterChart extends Component {
   constructor(props) {
@@ -14,13 +11,18 @@ export class ScatterChart extends Component {
   getChartData = () => {
     const x = this.props.depVar.code
     const y = this.props.indepVar.code 
-    const data = getData('municipio')
+    const data = this.props.data 
     return Object.values(data[x]).map(
       (datum, i) => {
         return {x: datum, y: data[y][i]}
       }
     )
   }
+
+  tooltipLabel = (tooltipItems, data) =>  (' ' 
+    + this.props.data.municipio[tooltipItems.index] 
+    + ' (' + tooltipItems.xLabel.toFixed(1) + ', ' 
+    + tooltipItems.yLabel.toFixed(1) + ')')
 
   chartData = () => {
     return {
@@ -54,18 +56,11 @@ export class ScatterChart extends Component {
 			},
       tooltips: {
         callbacks: {
-          label: function(tooltipItems, data) {
-            console.log(tooltipItems)
-            return (' ' +munis[tooltipItems.index] + ' (' 
-                + tooltipItems.xLabel.toFixed(1) + ', ' 
-                + tooltipItems.yLabel.toFixed(1) + ')')
+          label: this.toolTipLabel 
           }
         }
       }
 		}
-	}
-
-
 
 	render() {
 		return(

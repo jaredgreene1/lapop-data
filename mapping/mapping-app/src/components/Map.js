@@ -132,7 +132,7 @@ export class Map extends Component {
                 disableOptimization={ this.state.forceUpdate }
               > 
                 {(geographies, projection) => geographies.map((geography, i) => {
-                geography.properties['data'] = getDataByLocation(geography.properties) 
+                geography.properties['data'] = getDataByLocation(geography.properties, this.props.data) 
                 return(
                   <Geography
                     key={ geography.id }

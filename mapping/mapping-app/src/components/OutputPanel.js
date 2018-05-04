@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from './Input';
 import { ScatterChart } from './Scatter'
 import { Map } from './Map'
-
+import { getData } from '../data/data';
 
 const outputPanel = {
  backgroundColor: '#FFF',
@@ -18,39 +18,42 @@ const header = {
   display: 'flex'
 }
 
+
 export class OutputPanel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      view: 'map'
+      data: getData(this.props.unit, this.props.year)
     }
   }
 
-  showMap = () => {
-    this.setState({
-      view: 'map'
-    })
-  }
 
-  showChart = () => {
-    this.setState({
-      view: 'chart'
-    })
+  componentDidUpdate = (prevProps, prevState, snapshoot) => {
+    console.log(prevProps.year + ', ' + this.props.year)
+    console.log(prevProps.unit + ', ' + this.props.unit)
+    if (prevProps.year != this.props.year || this.props.unit != prevProps.unit){
+      console.log("updating data")
+      this.setState({data: getData(this.props.unit, this.props.year)})
+    }
   }
+      
+  
   render() {
     return(
       <div style={outputPanel}>
-        <div style={header}>
-          <button onClick={this.showMap}> Map </button> 
-          <button onClick={this.showChart}> Chart </button> 
-        </div>
-        <hr />
-        { this.state.view == 'map' ? <Map code={ this.props.depVar }/> : null}
-        { this.state.view == 'chart' ? 
+        { this.props.view == 'map' && 
+          <Map 
+            code={ this.props.depVar } 
+            data={ this.state.data }
+          />
+        }
+
+        { this.props.view == 'chart' && 
           <ScatterChart 
             depVar= { this.props.depVar } 
             indepVar={ this.props.indepVar }
-          /> : null
+            data={ this.state.data }
+          /> 
         }
       </div>
     )

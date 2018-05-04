@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { codes17 } from '../data/varcoding';
+import { getData } from '../data/data';
 
 const inputPanel= {
   display: 'flex',
@@ -37,9 +36,9 @@ export class InputPanel extends Component {
         <div name='dep_var' style={question}>
           <b> Dependent variable: </b>
           <select onChange={ this.props.setDepVar }>
-              { Object.keys(codes17).map(key => 
-                <option value={ codes17[key].code }> 
-                  { codes17[key].label}
+              { Object.keys(this.props.vars).map(key => 
+                <option value={ this.props.vars[key].code }> 
+                  { this.props.vars[key].label}
                 </option>)
               }
           </select>
@@ -47,9 +46,9 @@ export class InputPanel extends Component {
         <div name='indep_var' style={question}>
           <b> Independent variable: </b>
           <select onChange={ this.props.setIndepVar }>
-            { Object.keys(codes17).map(key => 
-              <option value={ codes17[key].code }> 
-                { codes17[key].label}
+            { Object.keys(this.props.vars).map(key => 
+              <option value={ this.props.vars[key].code }> 
+                { this.props.vars[key].label}
               </option>)
             }
           </select>
@@ -57,29 +56,24 @@ export class InputPanel extends Component {
         <div name='year' style={question}>
           <b> Year: </b>
           <select onChange={ this.props.setYear }>
-            { Object.keys(codes17).map(key => 
-              <option value={ codes17[key].code }> 
-                { codes17[key].label}
-              </option>)
-            }
+            <option value={ 2017 }> '2017' </option>
+            <option value={ 2014 }> '2014' </option>
           </select>
         </div>
         <div name='view' style={question}>
           <b> View: </b>
           <select onChange={ this.props.setView }>
-            { Object.keys(codes17).map(key => 
-              <option value={ codes17[key].code }> 
-                { codes17[key].label}
-              </option>)
+              <option value={'map' }> 'Map'</option>
+              <option value={'chart' }> 'Scatter'</option>
             }
           </select>
         </div>
         <div name='analysis' style={question}>
           <b> Analysis: </b>
           <select onChange={ this.props.setAnalysis }>
-            { Object.keys(codes17).map(key => 
-              <option value={ codes17[key].code }> 
-                { codes17[key].label}
+            { Object.keys(this.props.vars).map(key => 
+              <option value={ this.props.vars[key].code }> 
+                { this.props.vars[key].label}
               </option>)
             }
           </select>

@@ -19,15 +19,13 @@ class App extends Component {
   constructor() {
     super()
     this.state ={
-      view: '',
+      view: 'map',
       depVar: 'indig',
       indepVar: '',
-      unit: '',
+      unit: 'municipio',
       year: '2017',
       analysis: '',
       vars: getVars('2017')
-
-      
   }
 }
 
@@ -58,8 +56,8 @@ class App extends Component {
           <h1> LAPOP Explorer - Guatemala </h1>
           <hr />
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
-            <InputPanel {...this.callbacks()} /> 
-            <OutputPanel depVar={ this.state.depVar } indepVar={ this.state.indepVar }/> 
+            <InputPanel {...this.callbacks()} {...this.state} /> 
+            <OutputPanel {...this.state}/> 
           </div>
         </section>
         <section name='section2'>
