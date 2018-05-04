@@ -1,40 +1,51 @@
-import deptData from './data_0.json';
-import muniData from './data_1.json';
+import dept17 from './dept_2017.json';
+import muni17 from './muni_2017.json';
+import dept14 from './dept_2014.json';
+import muni14 from './muni_2014.json';
 
 import { codes17 } from './varcoding'
                                                                            
-const getDeptDataByLocation = (geoData) => {                                         
-  const idx = Object.values(deptData['prov']).indexOf(geoData.NAME_1)   
+const getDeptDataByLocation = (geoData, dataset) => {                                         
+  const idx = Object.values(dataset['prov']).indexOf(geoData.NAME_1)   
   return Object.keys(codes17).reduce((data, key) => { 
-      data[key] = deptData[key][idx] 
+      data[key] = dataset[key][idx] 
       return data}, {})
 }
 
-const getMuniDataByLocation = (geoData) => {
+const getMuniDataByLocation = (geoData, dataset) => {
 	const locale = ( geoData.NAME_2 + ', ' + geoData.NAME_1 )               
-	const idx = Object.values(muniData['municipio']).indexOf(locale)
+	const idx = Object.values(dataset['municipio']).indexOf(locale)
   return Object.keys(codes17).reduce((data, key) => { 
-      data[key] = muniData[key][idx] 
+      data[key] = dataset[key][idx] 
       return data}, {})
 }
 
-export const getDataByLocation = (geoData) => {
+export const getDataByLocation = (geoData, dataset) => {
   if(geoData.NAME_2) {
-    return getMuniDataByLocation(geoData)
+    return getMuniDataByLocation(geoData, dataset)
   } else {
-    return getDeptDataByLocation(geoData)
+    return getDeptDataByLocation(geoData, dataset)
   }
 }
 
-export const getData = (grouping) => {
-  switch(grouping) {
-    case 'municipio':
-      return muniData;
-      break;
-    case 'departamento':
-      return deptData
-      break;
-    default:
-      throw "Invalid data grouping: " + grouping
+export const getData = (grouping, year) => {
+    const error = "Invalid data selection: " + grouping + ' in ' + year
+    let data = null
+    if (grouping == 'municipio') {
+      if(year == '2017')
+        data = muni17
+      else if(year == '2014')
+        data = muni14
+      else
+        throw error
+    } else if(grouping == 'departamento') {
+        if(year == '2017')
+          data = dept17
+        else if(year == '2014')
+          data = dept14
+        else
+          throw error
+    } else
+        throw error
+    return JSON.parse(data)
   }
-}
