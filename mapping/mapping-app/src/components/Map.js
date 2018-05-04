@@ -16,14 +16,6 @@ const LOWCOLOR  = '#005eb1'
 const MIDCOLOR  = '#2769d4'
 const HIGHCOLOR = '#F3F9FE'
 
-const mapBox = {
- backgroundColor: '#FFF',
- width: 'fit-content',
- margin: '0 auto',
- color: '#313131',
- borderRadius: '7px',
-}
-
 
 export class Map extends Component {
   constructor(props) {
@@ -89,7 +81,8 @@ export class Map extends Component {
   render() {
     return(
       <div>
-        <h1> {this.props.variable.label} </h1>
+        <h3> {this.props.variable.label} </h3>
+        <hr />
         <div style={{padding: '10px', display: 'flex'}}> 
           <Button active={true} bsSize={'small'} onClick={ this.handleZoomIn }> { '+' } </Button> 
             <Button bsSize={'lg'} onClick={ this.handleZoomOut }> { '-' } </Button> 

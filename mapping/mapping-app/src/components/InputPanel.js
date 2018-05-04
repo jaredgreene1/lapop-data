@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getData } from '../data/data';
+import { ButtonGroup, Button } from './Input';
 
 const inputPanel= {
   display: 'flex',
@@ -12,8 +13,6 @@ const inputPanel= {
   height: 'fit-content',
   marginBottom: '10px',
   borderRadius: '7px',
-  boxShadow: 'black 1px 1px 22px -8px',
-  background: 'linear-gradient( #3397faeb, #99c2ff)',
   flexGrow:'2'
 }
 
@@ -33,6 +32,23 @@ export class InputPanel extends Component {
     return(
 
       <div name='inputPanel' style={inputPanel}>
+
+        <div name='view' style={question}>
+          <b> View: </b>
+          <ButtonGroup onChange={this.props.setView} value={ this.props.view }>
+            <Button value={'chart'}> Scatter </Button>
+            <Button value={'map'}> Map </Button>
+          </ButtonGroup>
+        </div>
+
+        <div name='year' style={question}>
+          <b> Year: </b>
+            <ButtonGroup onChange={this.props.setYear} value={ this.props.year }>
+              <Button value={2014}> 2014 </Button>
+              <Button value={2017}> 2017 </Button>
+          </ButtonGroup>
+        </div>
+
         <div name='dep_var' style={question}>
           <b> Dependent variable: </b>
           <select onChange={ this.props.setDepVar }>
@@ -43,6 +59,7 @@ export class InputPanel extends Component {
               }
           </select>
         </div>
+
         <div name='indep_var' style={question}>
           <b> Independent variable: </b>
           <select onChange={ this.props.setIndepVar }>
@@ -53,29 +70,15 @@ export class InputPanel extends Component {
             }
           </select>
         </div>
-        <div name='year' style={question}>
-          <b> Year: </b>
-          <select onChange={ this.props.setYear }>
-            <option value={ 2017 }> 2017 </option>
-            <option value={ 2014 }> 2014 </option>
-          </select>
-        </div>
-        <div name='view' style={question}>
-          <b> View: </b>
-          <select onChange={ this.props.setView }>
-              <option value={'map' }> Map </option>
-              <option value={'chart' }> Scatter </option>
-            }
-          </select>
-        </div>
+
         <div name='unit' style={question}>
           <b> Unit: </b>
           <select onChange={ this.props.setUnit }>
               <option value={'departamento' }> Department </option>
               <option value={'municipio' }> Municipality </option>
-            }
           </select>
         </div>
+
         <div name='analysis' style={question}>
           <b> Analysis: </b>
           <select onChange={ this.props.setAnalysis }>
@@ -86,6 +89,7 @@ export class InputPanel extends Component {
             }
           </select>
         </div>
+
       </div>
     )
   }
