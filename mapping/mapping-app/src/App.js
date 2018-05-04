@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Map, MapControls } from './components/Map.js';
-import ScatterChart from './components/Scatter.js';
-import { InputPanel } from './components/InputPanel';
-
-import { OutputPanel } from './components/OutputPanel.js';
 
 import background from './background_blue.jpeg';
+import { InputPanel } from './components/InputPanel';
+import { OutputPanel } from './components/OutputPanel.js';
+import { getVars } from './data/varcoding.js';
 
 const section1 = {
   backgroundImage: "url(" + background + ")",
@@ -21,14 +19,37 @@ class App extends Component {
   constructor() {
     super()
     this.state ={
-      depVar: 'prot3',
-      indepVar: 'prot3',
+      view: '',
+      depVar: 'indig',
+      indepVar: '',
+      unit: '',
+      year: '2017',
+      analysis: '',
+      vars: getVars('2017')
+
+      
   }
 }
 
-  setDepVar = (e) => this.setState({ depVar: e.target.value})
-  setIndepVar = (e) => this.setState({ indepVar: e.target.value})
-
+  callbacks = () => {
+    return {
+      setDepVar: e => {
+        const varInfo = this.state.vars[e.target.value]
+        this.setState({ depVar: varInfo})
+      },
+      setIndepVar: e => {
+        const varInfo = this.state.vars[e.target.value]
+        this.setState({ indepVar: varInfo})
+      },
+      setView: e => this.setState({ view: e.target.value}),
+      setUnit: e => this.setState({ unit: e.target.value}),
+      setYear: e => this.setState({ 
+        year: e.target.value,
+        vars: getVars(e.target.value)
+      }),
+      setAnalysis: e => this.setState({ analysis: e.target.value}),
+    }
+  }
 
   render() {
     return(
@@ -37,7 +58,7 @@ class App extends Component {
           <h1> LAPOP Explorer - Guatemala </h1>
           <hr />
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
-            <InputPanel setDepVar={ this.setDepVar } setIndepVar={ this.setIndepVar }/>
+            <InputPanel {...this.callbacks()} /> 
             <OutputPanel depVar={ this.state.depVar } indepVar={ this.state.indepVar }/> 
           </div>
         </section>

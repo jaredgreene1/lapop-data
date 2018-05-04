@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { codes17 } from '../data/varcoding';
 
 const inputPanel= {
@@ -74,7 +76,7 @@ export class InputPanel extends Component {
         </div>
         <div name='analysis' style={question}>
           <b> Analysis: </b>
-          <select onChange={ this.props.setView }>
+          <select onChange={ this.props.setAnalysis }>
             { Object.keys(codes17).map(key => 
               <option value={ codes17[key].code }> 
                 { codes17[key].label}
@@ -87,3 +89,12 @@ export class InputPanel extends Component {
   }
 }
 
+
+InputPanel.propTypes = {
+  setDepVar: PropTypes.func.isRequired,
+  setIndepVar: PropTypes.func.isRequired,
+  setYear: PropTypes.func.isRequired,
+  setView: PropTypes.func.isRequired,
+  setUnit: PropTypes.func.isRequired,
+  setAnalysis: PropTypes.func.isRequired,
+}

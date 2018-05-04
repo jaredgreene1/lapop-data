@@ -36,3 +36,13 @@ export const codes17 = {
   },
 }
 
+export const getVars = year => {
+  switch(year) {
+    case '2017':
+      return codes17;
+      break;
+    default:
+      throw "INVALID YEAR SELECT"
+      break;
+  }
+}

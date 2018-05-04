@@ -4,7 +4,6 @@ import { scaleLinear } from "d3-scale";
 import { Button } from 'react-bootstrap';
 import InfoBox from './InfoBox';
 import { getDataByLocation } from '../data/data.js';
-import { codes17 } from '../data/varcoding';
 
 import {
   ComposableMap,
@@ -59,9 +58,9 @@ export class Map extends Component {
 
   colorScale = () => scaleLinear()
     .domain([
-      codes17[this.state.dataCode].low, 
-      (codes17[this.state.dataCode].high - codes17[this.state.dataCode].low)/(2.0), 
-      codes17[this.state.dataCode].high, 
+      this.state.dataCode.low, 
+      (this.state.dataCode.high - this.state.dataCode.low)/(2.0), 
+      this.state.dataCode.high, 
     ]).range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
@@ -106,7 +105,7 @@ export class Map extends Component {
   render() {
     return(
       <div>
-        <h1> {codes17[this.state.dataCode].label} </h1>
+        <h1> {this.state.dataCode.label} </h1>
         <div style={{padding: '10px', display: 'flex'}}> 
           <Button onClick={ this.toggleView } > 
             {this.state.view ? 'Department view': 'Municipality view'} 
@@ -138,14 +137,14 @@ export class Map extends Component {
                   <Geography
                     key={ geography.id }
                     geography={ geography }
-                    cacheId={ 'geography-' + i + this.state.view + this.state.dataCode}
+                    cacheId={ 'geography-' + i + this.state.view + this.state.dataCode.code}
                     projection={ projection }
                     onClick={ this.handleClick }
                     onMouseOver={ (e) => this.handleMouseOver(e, geography.properties)}
                     onWheel={ this.handleWheel }
                     style = {{
                       default: { 
-                        fill: this.colorScale()(geography.properties.data[this.state.dataCode]),
+                        fill: this.colorScale()(geography.properties.data[this.state.dataCode.code]),
                         stroke: "#000",
                         strokeWidth: "0.2",
                         outline: "none",
