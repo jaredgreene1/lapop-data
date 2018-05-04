@@ -20,8 +20,8 @@ class App extends Component {
     super()
     this.state ={
       view: 'map',
-      depVar: getVars('2017')['indig'], 
-      indepVar: '',
+      depVar: getVars('2017')['prot3'], 
+      indepVar: getVars('2017')['prot3'], 
       unit: 'departamento',
       year: '2017',
       analysis: '',
@@ -39,13 +39,13 @@ class App extends Component {
         const varInfo = this.state.vars[e.target.value]
         this.setState({ indepVar: varInfo})
       },
-      setView: e => this.setState({ view: e.target.value}),
+      setView: view => this.setState({ view: view}),
       setUnit: e => this.setState({ unit: e.target.value}),
-      setYear: e => this.setState({ 
-        year: e.target.value,
-        vars: getVars(e.target.value)
+      setYear: year => this.setState({ 
+        year: year,
+        vars: getVars(year)
       }),
-      setAnalysis: e => this.setState({ analysis: e.target.value}),
+      setAnalysis: analysis => this.setState({ analysis: analysis}),
     }
   }
 
