@@ -20,9 +20,9 @@ class App extends Component {
     super()
     this.state ={
       view: 'map',
-      depVar: 'indig',
+      depVar: getVars('2017')['indig'], 
       indepVar: '',
-      unit: 'municipio',
+      unit: 'departamento',
       year: '2017',
       analysis: '',
       vars: getVars('2017')

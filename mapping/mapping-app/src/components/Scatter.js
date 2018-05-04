@@ -20,7 +20,7 @@ export class ScatterChart extends Component {
   }
 
   tooltipLabel = (tooltipItems, data) =>  (' ' 
-    + this.props.data.municipio[tooltipItems.index] 
+    + this.props.labels[tooltipItems.index] 
     + ' (' + tooltipItems.xLabel.toFixed(1) + ', ' 
     + tooltipItems.yLabel.toFixed(1) + ')')
 
@@ -56,7 +56,7 @@ export class ScatterChart extends Component {
 			},
       tooltips: {
         callbacks: {
-          label: this.toolTipLabel 
+          label: this.tooltipLabel 
           }
         }
       }

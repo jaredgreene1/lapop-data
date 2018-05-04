@@ -3,6 +3,8 @@ import { Button } from './Input';
 import { ScatterChart } from './Scatter'
 import { Map } from './Map'
 import { getData } from '../data/data';
+import muni_map from '../data/muni_map.json';
+import dept_map from '../data/dept_map.json';
 
 const outputPanel = {
  backgroundColor: '#FFF',
@@ -18,41 +20,64 @@ const header = {
   display: 'flex'
 }
 
+const mapData = (unit, year, variable) => {
+  return {
+    geoData: geoData(unit),
+    data: getData(unit, year),
+    variable: variable,
+  }
+
+}
+
+
+const geoData = (unit) => {
+  switch(unit){
+    case 'departamento':
+      return dept_map
+      break;
+    case 'municipio':
+      return muni_map
+      break;
+    default:
+      throw "Invalid geographic unit"
+  }
+}
+
+const scatterData = (unit, year, indepVar, depVar) => {
+  const data = getData(unit, year)
+  let labels = []
+  if (unit == 'departamento')
+    labels = Object.values(data.prov)
+  if (unit == 'municipio')
+    labels = Object.values(data.municipio)
+
+  return {
+    data: data,
+    indepVar: indepVar,
+    depVar: depVar,
+    labels: labels,
+  }
+
+}
 
 export class OutputPanel extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      data: getData(this.props.unit, this.props.year)
-    }
   }
 
-
-  componentDidUpdate = (prevProps, prevState, snapshoot) => {
-    console.log(prevProps.year + ', ' + this.props.year)
-    console.log(prevProps.unit + ', ' + this.props.unit)
-    if (prevProps.year != this.props.year || this.props.unit != prevProps.unit){
-      console.log("updating data")
-      this.setState({data: getData(this.props.unit, this.props.year)})
-    }
-  }
-      
-  
   render() {
     return(
       <div style={outputPanel}>
         { this.props.view == 'map' && 
-          <Map 
-            code={ this.props.depVar } 
-            data={ this.state.data }
-          />
+          <Map { ...mapData(this.props.unit, this.props.year, this.props.depVar)}/>
         }
 
         { this.props.view == 'chart' && 
-          <ScatterChart 
-            depVar= { this.props.depVar } 
-            indepVar={ this.props.indepVar }
-            data={ this.state.data }
+          <ScatterChart {...scatterData(
+            this.props.unit, 
+            this.props.year,
+            this.props.depVar,
+            this.props.indepVar)}
           /> 
         }
       </div>

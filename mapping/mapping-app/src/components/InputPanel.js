@@ -56,15 +56,23 @@ export class InputPanel extends Component {
         <div name='year' style={question}>
           <b> Year: </b>
           <select onChange={ this.props.setYear }>
-            <option value={ 2017 }> '2017' </option>
-            <option value={ 2014 }> '2014' </option>
+            <option value={ 2017 }> 2017 </option>
+            <option value={ 2014 }> 2014 </option>
           </select>
         </div>
         <div name='view' style={question}>
           <b> View: </b>
           <select onChange={ this.props.setView }>
-              <option value={'map' }> 'Map'</option>
-              <option value={'chart' }> 'Scatter'</option>
+              <option value={'map' }> Map </option>
+              <option value={'chart' }> Scatter </option>
+            }
+          </select>
+        </div>
+        <div name='unit' style={question}>
+          <b> Unit: </b>
+          <select onChange={ this.props.setUnit }>
+              <option value={'departamento' }> Department </option>
+              <option value={'municipio' }> Municipality </option>
             }
           </select>
         </div>

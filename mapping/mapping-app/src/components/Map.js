@@ -30,27 +30,16 @@ export class Map extends Component {
     super(props)
     this.state = {
       zoom: 1.5,
-      view: 1, // 0 for department view and 1 for municipality view 
       dept: '',
       muni: '',
       data: null,
-      dataCode: this.props.code, 
       forceUpdate: false,  
     }
   }
 
-  toggleView = () => {
-    this.setState( (prevState, props) => {
-      const newView = prevState.view ^= 1 //toggles between 1 and 0 w/ an XOR
-      return {view: newView,}
-    })
-  }
-  
-
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.code != this.state.dataCode){
+    if (nextProps.variable != this.props.variable || nextProps.data != this.props.data){
       this.setState({
-        dataCode: nextProps.code,
         forceUpdate: true,
       })
     }
@@ -58,9 +47,9 @@ export class Map extends Component {
 
   colorScale = () => scaleLinear()
     .domain([
-      this.state.dataCode.low, 
-      (this.state.dataCode.high - this.state.dataCode.low)/(2.0), 
-      this.state.dataCode.high, 
+      this.props.variable.low, 
+      (this.props.variable.high - this.props.variable.low)/(2.0), 
+      this.props.variable.high, 
     ]).range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
@@ -71,17 +60,12 @@ export class Map extends Component {
     }
   }
 
-  geoFile = () => 'GT_' + this.state.view + '.json'
-
   handleZoomIn = () => {
     this.setState({ zoom: this.state.zoom * 1.15, })
   }
 
   handleZoomOut = () => {
     this.setState({ zoom: this.state.zoom / 1.15, })
-  }
-
-  handleClick = (geography, evt) => {
   }
 
   handleMouseOver = (e, geography) => {
@@ -105,11 +89,8 @@ export class Map extends Component {
   render() {
     return(
       <div>
-        <h1> {this.state.dataCode.label} </h1>
+        <h1> {this.props.variable.label} </h1>
         <div style={{padding: '10px', display: 'flex'}}> 
-          <Button onClick={ this.toggleView } > 
-            {this.state.view ? 'Department view': 'Municipality view'} 
-          </Button>
           <Button active={true} bsSize={'small'} onClick={ this.handleZoomIn }> { '+' } </Button> 
             <Button bsSize={'lg'} onClick={ this.handleZoomOut }> { '-' } </Button> 
           </div>
@@ -128,7 +109,7 @@ export class Map extends Component {
             }}>
               <ZoomableGroup zoom={ this.state.zoom }>
               <Geographies 
-                geography={ this.geoFile() } 
+                geography={ this.props.geoData } 
                 disableOptimization={ this.state.forceUpdate }
               > 
                 {(geographies, projection) => geographies.map((geography, i) => {
@@ -137,14 +118,14 @@ export class Map extends Component {
                   <Geography
                     key={ geography.id }
                     geography={ geography }
-                    cacheId={ 'geography-' + i + this.state.view + this.state.dataCode.code}
+                    cacheId={ 'geography-' +  geography.properties.ID_2 + geography.properties.ID_1 + this.props.geoData[0]}
                     projection={ projection }
                     onClick={ this.handleClick }
                     onMouseOver={ (e) => this.handleMouseOver(e, geography.properties)}
                     onWheel={ this.handleWheel }
                     style = {{
                       default: { 
-                        fill: this.colorScale()(geography.properties.data[this.state.dataCode.code]),
+                        fill: this.colorScale()(geography.properties.data[this.props.variable.code]),
                         stroke: "#000",
                         strokeWidth: "0.2",
                         outline: "none",
