@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Button } from './Input';
 import { ScatterChart } from './Scatter'
 import { Map } from './Map'
+import { StatsOutput } from './StatsOutput'
 import { getData } from '../data/data';
+import { ols } from '../stats';
 import muni_map from '../data/muni_map.json';
 import dept_map from '../data/dept_map.json';
 
 const outputPanel = {
  backgroundColor: '#FFF',
- width: 'fit-content',
+ width: '500px',
  margin: '0 auto',
  padding: '10px',
  color: '#313131',
@@ -26,9 +28,29 @@ const mapData = (unit, year, variable) => {
     data: getData(unit, year),
     variable: variable,
   }
-
 }
 
+const statsData = (unit, year, depVar, indepVars, analysisVar) => {
+  console.log('unit: ' + unit)
+  console.log('year: ' + year)
+  console.log('depVar: ')
+  console.log(depVar)
+  console.log('indepVars: ' + indepVars)
+  console.log(indepVars)
+  console.log('analaysis: ' + analysisVar)
+  console.log(analysisVar)
+  let data = getData(unit, year)
+  console.log('data')
+  console.log(data)
+  let analys = Object.values(data[analysisVar.code])
+  let indeps = Object.values(data[indepVars.code]).map((dt, idx) => [dt, analys[idx]]) //hack for now
+  const deps = Object.values(data[depVar.code])
+  let output = ols(deps, indeps)
+  return({
+    output: output,
+    data: data
+  })
+}
 
 const geoData = (unit) => {
   switch(unit){
@@ -79,6 +101,10 @@ export class OutputPanel extends Component {
             this.props.depVar,
             this.props.indepVar)}
           /> 
+        }
+
+        { this.props.view == 'stats' &&
+          <StatsOutput {...statsData(this.props.unit, this.props.year, this.props.depVar, this.props.indepVar, this.props.analysis)}/>
         }
       </div>
     )

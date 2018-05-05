@@ -44,6 +44,7 @@ export class InputPanel extends Component {
             <ButtonGroup onChange={this.props.setView} value={ this.props.view }>
               <Button value={'scatter'}> Scatter </Button>
               <Button value={'map'}> Map </Button>
+              <Button value={'stats'}> Analyze </Button>
             </ButtonGroup>
           </div>
 
@@ -84,11 +85,10 @@ export class InputPanel extends Component {
    analysis = () =>  
           <div name='analysis' style={question}>
             <text> Analysis: </text>
-            <select onChange={ this.props.setAnalysis } style={select}>
+            <select onChange={ this.props.setAnalysis } style={ select }>
               { Object.keys(this.props.vars).map(key => 
                 <option 
                   value={ this.props.vars[key].code }
-                  style={{background: '#288efa'}}
                 > 
                   { this.props.vars[key].label}
                 </option>)
@@ -114,7 +114,8 @@ export class InputPanel extends Component {
     configs = () => {
       return {
         map: [this.year, this.unit, this.depVar],
-        scatter: [this.year, this.unit, this.depVar, this.indepVar]
+        scatter: [this.year, this.unit, this.depVar, this.indepVar],
+        stats: [this.year, this.unit, this.depVar, this.indepVar, this.analysis]
       }
     }
       

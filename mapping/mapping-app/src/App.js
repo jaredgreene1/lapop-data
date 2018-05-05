@@ -24,7 +24,7 @@ class App extends Component {
       indepVar: getVars('2017')['prot3'], 
       unit: 'departamento',
       year: '2017',
-      analysis: '',
+      analysis: getVars('2017')['prot3'], 
       vars: getVars('2017')
   }
 }
@@ -45,7 +45,10 @@ class App extends Component {
         year: year,
         vars: getVars(year)
       }),
-      setAnalysis: analysis => this.setState({ analysis: analysis}),
+      setAnalysis: e => {
+        const varInfo = this.state.vars[e.target.value]
+        this.setState({ analysis: varInfo })
+      }
     }
   }
 
