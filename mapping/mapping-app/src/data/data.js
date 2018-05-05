@@ -3,11 +3,9 @@ import muni17 from './muni_2017.json';
 import dept14 from './dept_2014.json';
 import muni14 from './muni_2014.json';
 
-import { codes17 } from './varcoding'
-                                                                           
 const getDeptDataByLocation = (geoData, dataset) => {                                         
   const idx = Object.values(dataset['prov']).indexOf(geoData.NAME_1)   
-  return Object.keys(codes17).reduce((data, key) => { 
+  return Object.keys(dataset).reduce((data, key) => { 
       data[key] = dataset[key][idx] 
       return data}, {})
 }
@@ -15,7 +13,7 @@ const getDeptDataByLocation = (geoData, dataset) => {
 const getMuniDataByLocation = (geoData, dataset) => {
 	const locale = ( geoData.NAME_2 + ', ' + geoData.NAME_1 )               
 	const idx = Object.values(dataset['municipio']).indexOf(locale)
-  return Object.keys(codes17).reduce((data, key) => { 
+  return Object.keys(dataset).reduce((data, key) => { 
       data[key] = dataset[key][idx] 
       return data}, {})
 }

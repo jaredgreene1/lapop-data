@@ -65,7 +65,7 @@ export class ScatterChart extends Component {
 	render() {
 		return(
 			<div style={{backgroundColor:'white'}}>
-        <h1> {this.props.depVar.label + ' vs ' + this.props.indepVar.label} </h1>
+        <h3> {this.props.depVar.label + ' vs ' + this.props.indepVar.label} </h3>
         <hr />
 				<Scatter 
           data={ this.chartData()}

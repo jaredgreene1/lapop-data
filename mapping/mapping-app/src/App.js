@@ -39,8 +39,8 @@ class App extends Component {
         const varInfo = this.state.vars[e.target.value]
         this.setState({ indepVar: varInfo})
       },
-      setView: view => this.setState({ view: view}),
-      setUnit: e => this.setState({ unit: e.target.value}),
+      setView: view => this.setState({ view: view }),
+      setUnit: unit => this.setState({ unit: unit }),
       setYear: year => this.setState({ 
         year: year,
         vars: getVars(year)

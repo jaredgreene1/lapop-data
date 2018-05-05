@@ -72,7 +72,7 @@ export class OutputPanel extends Component {
           <Map { ...mapData(this.props.unit, this.props.year, this.props.depVar)}/>
         }
 
-        { this.props.view == 'chart' && 
+        { this.props.view == 'scatter' && 
           <ScatterChart {...scatterData(
             this.props.unit, 
             this.props.year,
