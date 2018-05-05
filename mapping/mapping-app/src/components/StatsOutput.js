@@ -8,9 +8,10 @@ export class StatsOutput extends Component {
 	render() {
 		return(
 			<div style={{backgroundColor:'white'}}>
-        <h3> { 'Ordinaty Least Squared Analysis' } </h3>
+        <h3> { 'Ordinary Least Squared Analysis' } </h3>
         <hr />
           <b> R-squared: </b>  { this.props.output.R2.toFixed(3) }
+          <br />
           <br />
           <b> Coefs: </b>  { this.props.output.coef.map(coef =>
             coef.toFixed(2) + ', ')

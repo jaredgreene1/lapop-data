@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { getData } from '../data/data';
 import { ButtonGroup, Button } from './Input';
@@ -57,10 +57,10 @@ export class InputPanel extends Component {
             </ButtonGroup>
           </div>
 
-  indepVar = () => 
-          <div name='indep_var' style={question}>
-            <text> Independent variable: </text>
-            <select onChange={ this.props.setIndepVar } style={select}>
+  selectVar = (label, propName) => () => 
+          <div name={ propName } style={question}>
+            <text> { label }: </text>
+            <select onChange={ e => this.props.setVar(propName, e) } style={select}>
               { Object.keys(this.props.vars).map(key => 
                 <option 
                   style={{background: '#288efa'}}
@@ -73,6 +73,8 @@ export class InputPanel extends Component {
           </div>
         
 
+
+
   unit = () => 
           <div name='unit' style={question}>
             <text> Unit: </text>
@@ -82,40 +84,11 @@ export class InputPanel extends Component {
             </ButtonGroup>
           </div>
 
-   analysis = () =>  
-          <div name='analysis' style={question}>
-            <text> Analysis: </text>
-            <select onChange={ this.props.setAnalysis } style={ select }>
-              { Object.keys(this.props.vars).map(key => 
-                <option 
-                  value={ this.props.vars[key].code }
-                > 
-                  { this.props.vars[key].label}
-                </option>)
-              }
-            </select>
-          </div>
-
-    depVar = () =>
-          <div name='dep_var' style={question}>
-            <text> Dependent variable: </text>
-            <select onChange={ this.props.setDepVar } style={select}>
-                { Object.keys(this.props.vars).map(key => 
-                  <option 
-                    value={ this.props.vars[key].code }
-                    style={{background: '#288efa'}}
-                  > 
-                    { this.props.vars[key].label}
-                  </option>)
-                }
-            </select>
-          </div>
-
     configs = () => {
       return {
-        map: [this.year, this.unit, this.depVar],
-        scatter: [this.year, this.unit, this.depVar, this.indepVar],
-        stats: [this.year, this.unit, this.depVar, this.indepVar, this.analysis]
+        map: [this.year, this.unit, this.selectVar('Variable', 'depVar')],
+        scatter: [this.year, this.unit, this.selectVar('Y-axis', 'depVar'), this.selectVar('X-axis', 'indepVar')],
+        stats: [this.year, this.unit, this.selectVar('Endogenous variable', 'depVar'), this.selectVar('Exogenous variable', 'indepVar')]
       }
     }
       

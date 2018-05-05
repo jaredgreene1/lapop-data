@@ -30,20 +30,9 @@ const mapData = (unit, year, variable) => {
   }
 }
 
-const statsData = (unit, year, depVar, indepVars, analysisVar) => {
-  console.log('unit: ' + unit)
-  console.log('year: ' + year)
-  console.log('depVar: ')
-  console.log(depVar)
-  console.log('indepVars: ' + indepVars)
-  console.log(indepVars)
-  console.log('analaysis: ' + analysisVar)
-  console.log(analysisVar)
+const statsData = (unit, year, depVar, indepVars) => {
   let data = getData(unit, year)
-  console.log('data')
-  console.log(data)
-  let analys = Object.values(data[analysisVar.code])
-  let indeps = Object.values(data[indepVars.code]).map((dt, idx) => [dt, analys[idx]]) //hack for now
+  let indeps = Object.values(data[indepVars.code]).map((dt, idx) => [dt]) //hack for now
   const deps = Object.values(data[depVar.code])
   let output = ols(deps, indeps)
   return({
@@ -104,7 +93,7 @@ export class OutputPanel extends Component {
         }
 
         { this.props.view == 'stats' &&
-          <StatsOutput {...statsData(this.props.unit, this.props.year, this.props.depVar, this.props.indepVar, this.props.analysis)}/>
+          <StatsOutput {...statsData(this.props.unit, this.props.year, this.props.depVar, this.props.indepVar)}/>
         }
       </div>
     )

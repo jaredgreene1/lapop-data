@@ -24,20 +24,14 @@ class App extends Component {
       indepVar: getVars('2017')['prot3'], 
       unit: 'departamento',
       year: '2017',
-      analysis: getVars('2017')['prot3'], 
       vars: getVars('2017')
   }
 }
 
   callbacks = () => {
     return {
-      setDepVar: e => {
-        const varInfo = this.state.vars[e.target.value]
-        this.setState({ depVar: varInfo})
-      },
-      setIndepVar: e => {
-        const varInfo = this.state.vars[e.target.value]
-        this.setState({ indepVar: varInfo})
+      setVar: (propName, e) => {
+        this.setState({[propName]: this.state.vars[e.target.value]})
       },
       setView: view => this.setState({ view: view }),
       setUnit: unit => this.setState({ unit: unit }),
@@ -45,10 +39,7 @@ class App extends Component {
         year: year,
         vars: getVars(year)
       }),
-      setAnalysis: e => {
-        const varInfo = this.state.vars[e.target.value]
-        this.setState({ analysis: varInfo })
-      }
+
     }
   }
 
