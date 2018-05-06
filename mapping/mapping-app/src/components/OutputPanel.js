@@ -8,9 +8,11 @@ import { ols } from '../stats';
 import muni_map from '../data/muni_map.json';
 import dept_map from '../data/dept_map.json';
 
+
 const outputPanel = {
  backgroundColor: '#FFF',
  width: '500px',
+ minHeight: '400px',
  margin: '0 auto',
  padding: '10px',
  color: '#313131',
@@ -18,28 +20,37 @@ const outputPanel = {
  boxShadow: 'black 2px 2px 15px',
 }
 
-const header = {
-  display: 'flex'
-}
 
 const mapData = (unit, year, variable) => {
   return {
     geoData: geoData(unit),
     data: getData(unit, year),
     variable: variable,
+    disabled: variable == undefined,
   }
 }
 
-const statsData = (unit, year, depVar, indepVars) => {
+
+const statsData = (unit, year, depVar, exogVars) => {
+  if( depVar == undefined || exogVars.length < 2)
+    return({disabled: true})
+
   let data = getData(unit, year)
-  let indeps = Object.values(data[indepVars.code]).map((dt, idx) => [dt]) //hack for now
+  let indeps = Object.values(data[exogVars[0].code]).map((dt, idx) => 
+    exogVars.map(exogVar => data[exogVar.code][idx]))
+  
+  console.log(indeps)
+
   const deps = Object.values(data[depVar.code])
   let output = ols(deps, indeps)
   return({
     output: output,
-    data: data
+    data: data,
+    exogVars: exogVars,
+    endogVar: depVar
   })
 }
+
 
 const geoData = (unit) => {
   switch(unit){
@@ -54,6 +65,7 @@ const geoData = (unit) => {
   }
 }
 
+
 const scatterData = (unit, year, indepVar, depVar) => {
   const data = getData(unit, year)
   let labels = []
@@ -67,9 +79,10 @@ const scatterData = (unit, year, indepVar, depVar) => {
     indepVar: indepVar,
     depVar: depVar,
     labels: labels,
+    disabled: (depVar == undefined || indepVar == undefined)
   }
-
 }
+
 
 export class OutputPanel extends Component {
   constructor(props) {
@@ -80,21 +93,31 @@ export class OutputPanel extends Component {
     return(
       <div style={outputPanel}>
         { this.props.view == 'map' && 
-          <Map { ...mapData(this.props.unit, this.props.year, this.props.depVar)}/>
+          <Map 
+            {...mapData(this.props.unit, 
+                  this.props.year, 
+                  this.props.depVar)}
+          />
         }
 
         { this.props.view == 'scatter' && 
-          <ScatterChart {...scatterData(
-            this.props.unit, 
-            this.props.year,
-            this.props.depVar,
-            this.props.indepVar)}
-          /> 
+          <ScatterChart 
+            {...scatterData(this.props.unit, 
+                  this.props.year,
+                  this.props.depVar,
+                  this.props.indepVar)}
+          />
         }
 
         { this.props.view == 'stats' &&
-          <StatsOutput {...statsData(this.props.unit, this.props.year, this.props.depVar, this.props.indepVar)}/>
+          <StatsOutput 
+            {...statsData(this.props.unit, 
+                  this.props.year, 
+                  this.props.depVar, 
+                  this.props.exogVars)}
+          />
         }
+
       </div>
     )
   }

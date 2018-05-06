@@ -20,8 +20,9 @@ class App extends Component {
     super()
     this.state ={
       view: 'map',
-      depVar: getVars('2017')['prot3'], 
-      indepVar: getVars('2017')['prot3'], 
+      depVar: undefined, 
+      indepVar: undefined, 
+      exogVars: [], 
       unit: 'departamento',
       year: '2017',
       vars: getVars('2017')
@@ -30,8 +31,13 @@ class App extends Component {
 
   callbacks = () => {
     return {
-      setVar: (propName, e) => {
-        this.setState({[propName]: this.state.vars[e.target.value]})
+      setDepVar: ({value, label}) => {
+        console.log(value)
+        this.setState({depVar: this.state.vars[value]})
+      },
+      setIndepVar: ({value, label}) => {
+        console.log(value)
+        this.setState({indepVar: this.state.vars[value]})
       },
       setView: view => this.setState({ view: view }),
       setUnit: unit => this.setState({ unit: unit }),
@@ -39,7 +45,9 @@ class App extends Component {
         year: year,
         vars: getVars(year)
       }),
-
+      setExogVars: exogVars => {
+        this.setState({exogVars: exogVars.map(({value, label}) => this.state.vars[value])})
+      },
     }
   }
 

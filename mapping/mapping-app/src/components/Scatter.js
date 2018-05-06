@@ -63,18 +63,26 @@ export class ScatterChart extends Component {
 		}
 
 	render() {
-		return(
-			<div style={{backgroundColor:'white'}}>
-        <h3> {this.props.depVar.label + ' vs ' + this.props.indepVar.label} </h3>
-        <hr />
-				<Scatter 
-          data={ this.chartData()}
-          options={this.chartOptions()}
-          width={500}
-          height={450}
-          />
-			</div>
-		)
-	}
-}
+    if(this.props.disabled)
+      return(
+        <div>
+          <h1 style={{margin: '15%', textAlign: 'center'}}>
+            Please select an X variable and a Y variable to display the chart
+          </h1>
+        </div>)
+    else
+      return(
+        <div style={{backgroundColor:'white'}}>
+          <h3> {this.props.depVar.label + ' vs ' + this.props.indepVar.label} </h3>
+          <hr />
+          <Scatter 
+            data={ this.chartData()}
+            options={this.chartOptions()}
+            width={500}
+            height={450}
+            />
+        </div>
+      )
+    }
+  }
 

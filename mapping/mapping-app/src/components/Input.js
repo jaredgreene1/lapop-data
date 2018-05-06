@@ -44,10 +44,7 @@ export class ButtonGroup extends React.Component {
     super();
   }
 
-
   handleClick = (e) => {this.props.onChange(e.target.value)}
-
-
   render(){
     return (
       <div>
@@ -61,3 +58,4 @@ export class ButtonGroup extends React.Component {
     )
   }
 }
+
