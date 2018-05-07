@@ -121,8 +121,8 @@ export class InputPanel extends Component {
           <div name='unit' style={question}>
             <text> Unit: </text>
             <ButtonGroup onChange={this.props.setUnit} value={ this.props.unit }>
-              <Button value={'departamento'}> Department </Button>
-              <Button value={'municipio'}> Municipality </Button>
+              <Button value={'departamento'}> Dept </Button>
+              <Button value={'municipio'}> Muni </Button>
             </ButtonGroup>
           </div>
 

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import normalize from 'normalize.css';
+
 
 import background from './background_blue.jpeg';
 import { InputPanel } from './components/InputPanel';

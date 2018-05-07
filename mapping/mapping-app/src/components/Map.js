@@ -21,19 +21,18 @@ const zoomButtons = {
   flexDirection: 'column',
   left: '-6%',
   top: '83%',
-  height: 'fit-content',
+  height: '15%',
   width: 'fit-content',
   position: 'relative',
   boxShadow: 'black 1px 1px 3px',
   borderRadius: '2px',
-  padding: '3px',
   background: '#fbfafa',
 }
 
 const button = {
   background: 'none',
   border: 'none',
-  padding: '2px',
+  padding: '4px 8px',
 
 }
 
