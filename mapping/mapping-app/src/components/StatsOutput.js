@@ -26,8 +26,8 @@ export class StatsOutput extends Component {
         </div>)   
 		return(
 			<div style={{backgroundColor:'white'}}>
-        <h3> { 'Ordinary Least Squared Analysis' } </h3>
-        <hr />
+        <h3 style={{borderBottom: '1px solid grey', paddingBottom: '5px', margin:'0'}}> { 'Ordinary Least Squared Analysis' } </h3>
+          <br />
           <b> Model information: </b>
           <br />
           <p style={outputSect}> Endogenous variable: 
