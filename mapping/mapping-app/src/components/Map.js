@@ -40,13 +40,14 @@ export class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      zoom: 1.5,
-      dept: '',
-      muni: '',
+      zoom: 1,
+      hovered: false,
+      clicked: false,
+      hoverData: {},
       data: null,
       forceUpdate: false,  
-      width: 200,
-      height: 200,
+      width: 500,
+      height: 400,
     }
   }
 
@@ -66,7 +67,6 @@ export class Map extends Component {
     ]).range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
-    this.resize()
     if(this.state.forceUpdate){
       this.setState({
         forceUpdate: false
@@ -74,7 +74,6 @@ export class Map extends Component {
     }
   }
 
-  componentDidMount = () => this.resize()
 
   handleZoomIn = () => {
     this.setState({ zoom: this.state.zoom * 1.15, })
@@ -84,13 +83,12 @@ export class Map extends Component {
     this.setState({ zoom: this.state.zoom / 1.15, })
   }
 
-  handleMouseOver = (e, geography) => {
-    this.setState({
-      dept: geography.NAME_1,
-      muni: geography.NAME_2,
-      data: geography.data
-    })
-  }
+  handleClick = () =>
+    this.setState((prevState, props) => {return{clicked: !this.state.clicked}})
+
+  handleMouseOver = (e, geo) => 
+    this.setState({hovered: true, hoverData: geo})
+
       
   handleWheel = (wheel, info) => {
    if( wheel.deltaY > 0) {
@@ -99,17 +97,6 @@ export class Map extends Component {
      this.handleZoomIn()
    }
    wheel.preventDefault()
-  }
-
-  resize = () => {
-   let el = document.getElementById('chart-output')
-    if(el && (Math.abs(el.offsetHeight-this.state.height) > 10 || el.offsetWidth !== this.state.width))
-    {
-      this.setState({
-        height: el.offsetHeight,
-        width: el.offsetWidth
-      })
-    }
   }
 
   render() {
@@ -126,22 +113,25 @@ export class Map extends Component {
           <h3 style={{borderBottom: '1px solid grey', paddingBottom: '5px', margin:'0'}}> {this.props.variable.label} </h3>
           <hr />
           <div style={{display: 'flex', flexGrow: '2', height:'100%', width: '100%'}}>  
-            {this.state.dept ? 
+            {this.state.hovered && 
               <InfoBox 
-                data={ this.state.data }
-                department={ this.state.dept }
-                municipality={ this.state.muni}/> 
-              : null
+                data={ this.state.hoverData } 
+                variable={ this.props.variable }
+                expanded={ this.state.clicked }
+                vars={ this.props.vars }
+                collapse={ this.handleClick }
+                />
             }
-            <div id='chart-output' style={{width: '100%', height: '100%'}}>
-              <ComposableMap width={this.state.width} height={this.state.height} projectionConfig={{
-                  scale: 6000,
-                  xOffset: 3506,
-                  yOffset: 710
-              }}>
-              <ZoomableGroup zoom={ this.state.zoom } >
+            <div id='chart-output' style={{display: 'flex', width: '100%', height: '100%', overflow: 'hidden'}}>
+              <ComposableMap 
+                width={this.state.width} 
+                height={this.state.height} 
+                projectionConfig={{scale: 6000,}}
+              >
+
+              <ZoomableGroup center={[-90.5, 15.5]} zoom={ this.state.zoom } >
                 <Geographies 
-                  geography={ this.props.geoData } 
+                  geography={ this.props.geoData} 
                   disableOptimization={ this.state.forceUpdate }
                 > 
                   {(geographies, projection) => geographies.map((geography, i) => {
@@ -154,6 +144,7 @@ export class Map extends Component {
                       projection={ projection }
                       onClick={ this.handleClick }
                       onMouseOver={ (e) => this.handleMouseOver(e, geography.properties)}
+                      onMouseLeave={ this.handleMouseExit }
                       onWheel={ this.handleWheel }
                       style = {{
                         default: { 

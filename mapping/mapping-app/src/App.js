@@ -2,30 +2,31 @@ import React, { Component } from 'react';
 import normalize from 'normalize.css';
 
 
-import background from './background_blue.jpeg';
 import { InputPanel } from './components/InputPanel';
 import { OutputPanel } from './components/OutputPanel.js';
 import { getVars } from './data/varcoding.js';
 
+
 const section1 = {
-  backgroundImage: "url(" + background + ")",
-  padding: '30px',
   backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  minHeight: '95vh',
+  background: 'linear-gradient(to right bottom, rgb(1, 1, 18), rgba(79, 79, 179, 0.81))',
+  padding: '30px',
+  minHeight: '100vh',
+  boxSizing: 'border-box',
   color: 'white',
   padding: '15px',
+  overflow: 'auto',
 }
 
 class App extends Component {
   constructor() {
     super()
     this.state ={
-      view: 'map',
-      depVar: undefined, 
-      indepVar: undefined, 
-      exogVars: [], 
-      unit: 'departamento',
+      view: 'scatter',
+      depVar: getVars('2017')['pol1'], 
+      indepVar: getVars('2017')['www1'], 
+      exogVars: [getVars('2017')['www1'], getVars('2017')['prot3']], 
+      unit: 'municipio',
       year: '2017',
       vars: getVars('2017')
   }
@@ -55,7 +56,7 @@ class App extends Component {
 
   render() {
     return(
-      <div>
+      <div name='background' >
         <section name='section1' style={ section1 }>
           <h1> LAPOP Explorer - Guatemala </h1>
           <hr />

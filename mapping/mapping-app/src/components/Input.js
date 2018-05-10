@@ -7,7 +7,7 @@ const activeButton = {
   padding: '7px 4px',
   width: '80px',
   background: '#ebeeff73',
-  color: '#ffffffde',
+  color: '#ffffff',
   cursor: 'pointer',
 }
 

@@ -50,7 +50,7 @@ export class InputPanel extends Component {
           </div>
 
 
-  selectVar = (label, onChange, multi) => () => {
+  selectVar = (label, onChange, multi, currVal) => () => {
     const options = Object.keys(this.props.vars).map(key => { 
                   return {
                     value: this.props.vars[key].code, 
@@ -67,7 +67,8 @@ export class InputPanel extends Component {
 
       control: (base, state) => ({
         ...base,
-        width: '175px',
+        minWidth: '175px',
+        maxWidth: '250px',
         borderRadius: '2px',
         minHeight: '10px',
       }),
@@ -111,6 +112,7 @@ export class InputPanel extends Component {
                 options={options} 
                 onChange={ onChange } 
                 isMulti={ multi }
+                value={currVal} 
               />
             </div>
   }
@@ -131,19 +133,29 @@ export class InputPanel extends Component {
         map: [
           this.year, 
           this.unit, 
-          this.selectVar('Variable', this.props.setDepVar, false),
+          this.selectVar('Variable', this.props.setIndepVar, false, this.props.indepVar),
         ],
         scatter: [
           this.year, 
           this.unit, 
-          this.selectVar('Y-axis', this.props.setDepVar, false), 
-          this.selectVar('X-axis', this.props.setIndepVar, false)
+          this.selectVar('X variable', this.props.setIndepVar, false, this.props.indepVar),
+          this.selectVar('Y variable', this.props.setDepVar, false, this.props.depVar) 
         ],
         stats: [
           this.year, 
           this.unit, 
-          this.selectVar('Endogenous variable', this.props.setDepVar), 
-          this.selectVar('Exogenous variables', this.props.setExogVars, true), 
+          this.selectVar(
+            'Endogenous variable', 
+            this.props.setDepVar, 
+            false, 
+            {label: this.props.depVar.label}
+          ), 
+          this.selectVar(
+            'Exogenous variables', 
+            this.props.setExogVars, 
+            true, 
+            Object.values(this.props.exogVars).map(v => {return {label: v.label, value: v.code}})
+          ), 
         ],
       }
     }

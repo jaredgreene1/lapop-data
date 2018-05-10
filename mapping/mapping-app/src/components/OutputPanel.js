@@ -11,13 +11,16 @@ import dept_map from '../data/dept_map.json';
 
 const outputPanel = {
  backgroundColor: '#FFF',
- width: '500px',
+ maxWidth: '500px',
+ width: '100%',
+ boxSizing: 'border-box',
  minHeight: '400px',
  margin: '0 auto',
  padding: '10px',
  color: '#313131',
  borderRadius: '3px',
  boxShadow: 'black 2px 2px 15px',
+ position: 'relative'
 }
 
 
@@ -96,7 +99,8 @@ export class OutputPanel extends Component {
           <Map 
             {...mapData(this.props.unit, 
                   this.props.year, 
-                  this.props.depVar)}
+                  this.props.indepVar)}
+            vars={ this.props.vars }
           />
         }
 

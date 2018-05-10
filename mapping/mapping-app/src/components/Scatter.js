@@ -5,6 +5,8 @@ export class ScatterChart extends Component {
   constructor(props) {
     super(props)
 		this.state = {
+      height: 200,
+      width: 200
     }
   }
 
@@ -18,6 +20,25 @@ export class ScatterChart extends Component {
       }
     )
   }
+
+  resize = () => {                                                         
+   let el = document.getElementById('chart-output')                        
+    if(el) 
+    {                                                                      
+      this.setState({                                                      
+        height: el.offsetHeight,                                           
+        width: el.offsetWidth                                              
+      })                                                                   
+    }                                                                      
+  }
+	
+	componentDidMount = () => this.resize()
+
+  componentWillMount = () => 
+    window.addEventListener('resize', this.resize())
+
+  componentWillUnmount = () => 
+    window.removeEventListener('resize', this.resize())
 
   tooltipLabel = (tooltipItems, data) =>  (' ' 
     + this.props.labels[tooltipItems.index] 
@@ -71,14 +92,15 @@ export class ScatterChart extends Component {
           </h1>
         </div>)
     else
+			this.resize()
       return(
         <div style={{backgroundColor:'white'}}>
           <h3 style={{borderBottom: '1px solid grey', paddingBottom: '5px', margin:'0'}}> {this.props.depVar.label + ' vs ' + this.props.indepVar.label} </h3>
           <Scatter 
             data={ this.chartData()}
             options={this.chartOptions()}
-            width={500}
-            height={450}
+            width={this.state.width}
+            height={this.state.height}
             />
         </div>
       )
