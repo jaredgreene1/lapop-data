@@ -34,8 +34,49 @@ export const codes17 = {
     low: 0,
     high: 1,
   },
+  guaprot1: {
+    code: 'guaprot1',
+    label: '2015 protest',
+    text: 'Did you participate in the 2015 protests?',
+    low: 0,
+    high: 1
+  },
+  np1: {
+    code: 'np1',
+    label: 'Townhall attendance',
+    text: 'Have you attendad an open townhall in the past 12 months?',
+    low: 0,
+    high: 1
+  },
+  vb1: {
+    code: 'vb1',
+    label: 'Voter registration',
+    text: 'Are you registrered to vote?',
+    low: 1,
+    high: 2
+  },
+  vb2: {
+    code: 'vb2',
+    label: 'Voter turnout',
+    text: 'Did you vote in the 1st round of the last election?',
+    low: 0,
+    high: 1
+  },
+  eff1: {
+    code: 'eff1',
+    label: 'Gov. cares',
+    text: 'Those that govern the country care about what you think',
+    low: 0,
+    high: 5
+  },
+  eff2: {
+    code: 'eff2',
+    label: 'Know political issues',
+    text: 'You feel you understand the most important political issues facing the country',
+    low: 0,
+    high: 5
+  }
 }
-
 
 export const codes14 = {
   prot3: {
@@ -66,6 +107,41 @@ export const codes14 = {
     low: 0,
     high: 1,
   },
+  np1: {
+    code: 'np1',
+    label: 'Townhall attendance',
+    text: 'Have you attendad an open townhall in the past 12 months?',
+    low: 0,
+    high: 1
+  },
+  vb1: {
+    code: 'vb1',
+    label: 'Voter registration',
+    text: 'Are you registrered to vote?',
+    low: 1,
+    high: 2
+  },
+  vb2: {
+    code: 'vb2',
+    label: 'Voter turnout',
+    text: 'Did you vote in the 1st round of the last election?',
+    low: 0,
+    high: 1
+  },
+  eff1: {
+    code: 'eff1',
+    label: 'Gov. cares',
+    text: 'Those that govern the country care about what you think',
+    low: 0,
+    high: 5
+  },
+  eff2: {
+    code: 'eff2',
+    label: 'Know political issues',
+    text: 'You feel you understand the most important political issues facing the country',
+    low: 0,
+    high: 5
+  }
 }
 
 export const getVars = year => {
