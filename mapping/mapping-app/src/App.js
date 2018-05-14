@@ -32,22 +32,34 @@ class App extends Component {
   }
 }
 
+  resetInvalidVars = (year) => {
+    const vars = getVars(year)
+    this.setState({
+      depVar: vars[this.state.depVar] || vars['pol1'],
+      indepVar: vars[this.state.indepVar] || vars['www1'],
+      exogVars: this.state.exogVars.map(val => vars[val.code] || vars['www1'])
+    })
+  }
+
   callbacks = () => {
     return {
       setDepVar: ({value, label}) => {
-        console.log(value)
         this.setState({depVar: this.state.vars[value]})
       },
       setIndepVar: ({value, label}) => {
-        console.log(value)
         this.setState({indepVar: this.state.vars[value]})
       },
       setView: view => this.setState({ view: view }),
-      setUnit: unit => this.setState({ unit: unit }),
-      setYear: year => this.setState({ 
-        year: year,
-        vars: getVars(year)
-      }),
+      setUnit: unit => {
+        this.setState({ unit: unit })
+      },
+      setYear: year => {
+        this.resetInvalidVars(year)
+        this.setState({ 
+          year: year,
+          vars: getVars(year)
+        })
+      },
       setExogVars: exogVars => {
         this.setState({exogVars: exogVars.map(({value, label}) => this.state.vars[value])})
       },
