@@ -145,13 +145,13 @@ export class InputPanel extends Component {
           this.year, 
           this.unit, 
           this.selectVar(
-            'Endogenous variable', 
+            'Dependent variable', 
             this.props.setDepVar, 
             false, 
             {label: this.props.depVar.label}
           ), 
           this.selectVar(
-            'Exogenous variables', 
+            'Independent variables', 
             this.props.setExogVars, 
             true, 
             Object.values(this.props.exogVars).map(v => {return {label: v.label, value: v.code}})

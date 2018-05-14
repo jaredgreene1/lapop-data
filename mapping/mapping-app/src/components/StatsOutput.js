@@ -21,45 +21,52 @@ export class StatsOutput extends Component {
       return(                                    
         <div>                                                             
           <h1 style={{margin: '15%', textAlign: 'center'}}>    
-            Please select an an endogenous and at least 2 exogenous variables 
+            Please select one dependent variable and at least 2 independent variables 
           </h1>                                                           
         </div>)   
 		return(
 			<div style={{backgroundColor:'white'}}>
-        <h3 style={{borderBottom: '1px solid grey', paddingBottom: '5px', margin:'0'}}> { 'Ordinary Least Squared Analysis' } </h3>
-          <br />
-          <b> Model information: </b>
-          <br />
-          <p style={outputSect}> Endogenous variable: 
-            <text style={output}>
-              { this.props.endogVar.code } 
-            </text>
-          </p>
-          <p style={outputSect}> Exogenous variables:
-            { 
-              this.props.exogVars.map(xVar => 
-                <text  style={output}> 
-                  {xVar.code} 
-                </text>
-              )  
+        <h3 style={{
+              borderBottom: '1px solid grey', 
+              paddingBottom: '5px', 
+              margin:'0'
+        }}> 
+          { 'Ordinary Least Squared Analysis' } 
+        </h3>
+        <br />
+        <b> Model information: </b>
+        <br />
+        <p style={outputSect}> Dependent variable: 
+          <ul style={output}>
+            <li> { this.props.endogVar.label } </li>
+          </ul>
+        </p>
+        <p style={outputSect}> Independent variables:
+          <ul>
+            { this.props.exogVars.map((xVar, idx) => 
+                <li style={output}> {xVar.label} </li>)
             } 
-          </p> 
+          </ul>
+        </p> 
 
-          <br />
-          <b> Analysis: </b>
-          <p style={outputSect}> R-squared: 
-                <text  style={output}> 
-                  {this.props.output.R2.toFixed(3)} 
-                </text>
-          </p>  
-          <p style={outputSect}> Coefs: 
-            { this.props.output.coef.map(coef =>
-                <text style={output}>
-                  {coef.toFixed(2)}
-                </text>
-              )
+        <br />
+        <b> Analysis: </b>
+        <p style={outputSect}> R-squared: 
+          <ul>
+            <li style={output}> 
+              {this.props.output.R2.toFixed(3)} 
+            </li>
+          </ul>
+        </p>  
+        <p style={outputSect}> Coefs: 
+          <ul>
+            { this.props.output.coef.map((coef, idx) =>
+                <li style={output}> 
+                  {coef.toFixed(2)} ({this.props.exogVars[idx].label}) 
+                </li>)
             }
-           </p>  
+          </ul>
+        </p>  
 			</div>
 		)
 	}
