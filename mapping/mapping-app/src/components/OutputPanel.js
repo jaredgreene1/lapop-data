@@ -27,28 +27,23 @@ const outputPanel = {
 const mapData = (unit, year, variable) => {
   return {
     geoData: geoData(unit),
-    data: getData(unit, year),
     variable: variable,
     disabled: variable == undefined,
   }
 }
 
 
-const statsData = (unit, year, depVar, exogVars) => {
+const statsData = (depVar, exogVars, data) => {
   if( depVar == undefined || exogVars.length < 2)
     return({disabled: true})
 
-  let data = getData(unit, year)
   let indeps = Object.values(data[exogVars[0].code]).map((dt, idx) => 
     exogVars.map(exogVar => data[exogVar.code][idx]))
-  
-  console.log(indeps)
 
   const deps = Object.values(data[depVar.code])
   let output = ols(deps, indeps)
   return({
     output: output,
-    data: data,
     exogVars: exogVars,
     endogVar: depVar
   })
@@ -69,8 +64,7 @@ const geoData = (unit) => {
 }
 
 
-const scatterData = (unit, year, indepVar, depVar) => {
-  const data = getData(unit, year)
+const scatterData = (unit, indepVar, depVar, data) => {
   let labels = []
   if (unit == 'departamento')
     labels = Object.values(data.prov)
@@ -78,10 +72,10 @@ const scatterData = (unit, year, indepVar, depVar) => {
     labels = Object.values(data.municipio)
 
   return {
-    data: data,
     indepVar: indepVar,
     depVar: depVar,
     labels: labels,
+    data: data,
     disabled: (depVar == undefined || indepVar == undefined)
   }
 }
@@ -90,7 +84,27 @@ const scatterData = (unit, year, indepVar, depVar) => {
 export class OutputPanel extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      year: props.year,
+      unit: props.unit,
+      data: getData(props.unit, props.year)
+      }
   }
+
+  static getDerivedStateFromProps = (nxtProps, curState) => {
+    console.log(nxtProps)
+    console.log(curState)
+    if(nxtProps.year == curState.year && nxtProps.unit == curState.unit)
+      return
+    else
+      return {
+        year: nxtProps.year,
+        unit: nxtProps.unit,
+        data: getData(nxtProps.unit, nxtProps.year)
+      }
+  }
+
+
 
   render() {
     return(
@@ -101,24 +115,24 @@ export class OutputPanel extends Component {
                   this.props.year, 
                   this.props.indepVar)}
             vars={ this.props.vars }
+            data={ this.state.data }
           />
         }
 
         { this.props.view == 'scatter' && 
           <ScatterChart 
-            {...scatterData(this.props.unit, 
-                  this.props.year,
+            {...scatterData(this.props.unit,
                   this.props.depVar,
-                  this.props.indepVar)}
+                  this.props.indepVar,
+                  this.state.data)}
           />
         }
 
         { this.props.view == 'stats' &&
           <StatsOutput 
-            {...statsData(this.props.unit, 
-                  this.props.year, 
-                  this.props.depVar, 
-                  this.props.exogVars)}
+            {...statsData(this.props.depVar, 
+                  this.props.exogVars,
+                  this.state.data)}
           />
         }
 

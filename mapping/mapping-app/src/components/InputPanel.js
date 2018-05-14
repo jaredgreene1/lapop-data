@@ -169,7 +169,7 @@ export class InputPanel extends Component {
           {this.chart()}
         </div>
 
-        <text style={{margin: '30px 0px 7px 0px'}}> Configuration </text>
+        <text style={{margin: '10px 0px 7px 0px'}}> Configuration </text>
         <div name='config' style={{padding: '10px', boxShadow: '#aeaef375 0px 0px 3px', borderRadius: '4px'}}>
           {this.configs()[this.props.view].map(input => input())}
         </div>
@@ -185,5 +185,4 @@ InputPanel.propTypes = {
   setYear: PropTypes.func.isRequired,
   setView: PropTypes.func.isRequired,
   setUnit: PropTypes.func.isRequired,
-  setAnalysis: PropTypes.func.isRequired,
 }

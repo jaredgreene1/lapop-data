@@ -12,30 +12,103 @@ const collapsed = {
   fontSize: '12px',
 }
 
-const expanded= {
+const expanded = {
+  background: '#6c6262fa',
+  bottom: '0',
   boxShadow: '4px 4px 32px -13px black',
+  boxSizing: 'border-box',
+  color: 'white',
+  display: 'grid',
+  fontSize: '12px',
+  gridTemplateColumns: '35% 65%',
+  gridTemplateRows: '10% 85%',
+  left: '0',
   margin: '10px',
   paddingLeft: '4px',
   paddingRight: '4px',
   position: 'absolute',
-  background: '#797575d9',
-  color: 'white',
-  fontSize: '12px',
-  left: '0',
-  top: '7%',
-  bottom: '0',
-  right: '0'
+  right: '0',
+  top: '0',
+  zIndex: '2',
+  gridTemplateAreas: ` 
+                      "top top"
+                      "bottom bottom" `
 }
 
 const closeButton = {
+  background: 'none',
+  border: 'none',
+  color: 'white',
+  fontSize: 'medium',
   position: 'absolute',
   right: '0%',
   top: '0%',
-  border: 'none',
-  background: 'none',
-  color: 'white',
-  fontSize: 'medium'
   }
+
+
+class ExpandedInfoBox extends Component {
+
+  render() {
+    const data = this.props.data.data
+    const dept = this.props.data.NAME_1
+    const muni = this.props.data.NAME_2
+    const variable = this.props.variable
+    const value = data[variable.code]
+    const vars = this.props.vars
+  
+    return(
+      <div style={ expanded }> 
+        <p style={{gridArea: 'top', borderBottom: '1px solid white' }}> 
+          <span style={{margin: '5px', marginRight:'15px'}}> 
+            <b> Department: </b> { dept } 
+          </span>
+          { muni && 
+            <span> 
+              <b> Municipality: </b> { muni } 
+            </span>
+          }
+        </p>
+        <div style={{height: '100%', gridArea: 'bottom', overflow: 'auto',}}>
+          { value ?
+            <span> {Object.keys(vars).map(key => 
+                <p style={{ padding: '7px', borderBottom:'1px solid #ffffff40'}}> 
+                  <span> { vars[key].label } </span> 
+                  <span style={{float: 'right'}}> 
+                    { (data[key] * 1).toFixed(2) } out of { vars[key].high }
+                  </span>
+                </p>)} 
+            </span>
+            : <span> No data available </span>
+          }
+        </div>
+      </div>
+    )
+  }
+}
+
+
+class CollapsedInfoBox extends Component {
+
+  render() {
+    const dept = this.props.data.NAME_1
+    const muni = this.props.data.NAME_2
+    const data = this.props.data.data
+    const variable = this.props.variable
+    const value = data[variable.code]
+    const vars = this.props.vars
+
+    return(
+      <div style={ collapsed }>
+        <p> <b> Department: </b> { dept } </p>
+        { muni && <p> <b> Municipality: </b> { muni } </p> }
+        { value ? 
+            <p> { variable.label } : { value.toFixed(2) } out of { variable.high } </p>
+            : <p> No data available </p>}
+      </div>
+    )
+  }
+}
+
 
 
 class InfoBox extends Component {
@@ -50,40 +123,17 @@ class InfoBox extends Component {
     return {expanded: nextProps.expanded}
   }
 
-  render() {
-    const dept = this.props.data.NAME_1
-    const muni = this.props.data.NAME_2
-    const data = this.props.data.data
-    const variable = this.props.variable
-    const value = data[variable.code]
-    const vars = this.props.vars
-
+  render(){
     return(
-      <div 
-        onClick={ this.props.collapse } 
-        style={ this.state.expanded ? expanded: collapsed }
-      >
-        { this.state.expanded && 
-          <button onClick={ this.props.collapse} style={ closeButton }> 
-            x 
-          </button> }
-
-        <p> <b> Department: </b> { dept } </p>
-        { muni && <p> <b> Municipality: </b> { muni } </p> }
-        { value ? <p> { variable.label } :  {value.toFixed(2)} out of {variable.high} </p>
-          : <p> No data available </p>}
-        { (this.state.expanded && value) && 
-            <div> 
-              { Object.keys(vars).map(key => 
-                <p> 
-                  { vars[key].label }: { data[key].toFixed(2) } out of { vars[key].high } 
-                </p> 
-              )}
-            </div>
-        }
+      <div onClick={ this.props.collapse }>
+        { this.state.expanded ? 
+          <ExpandedInfoBox {...this.props}/>
+          : <CollapsedInfoBox {...this.props}/>} 
       </div>
+    
     )
   }
 }
+
 
 export default InfoBox;
