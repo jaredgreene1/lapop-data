@@ -12,9 +12,9 @@ import {
   Geography,
 } from 'react-simple-maps'
 
-const LOWCOLOR  = '#005eb1'
-const MIDCOLOR  = '#2769d4'
-const HIGHCOLOR = '#F3F9FE'
+const LOWCOLOR  = '#B6C4F9'
+const MIDCOLOR  = '#6B8AFD'
+const HIGHCOLOR = '#3357FF'
 
 const zoomButtons = {
   display: 'flex',
@@ -62,9 +62,9 @@ export class Map extends Component {
   colorScale = () => scaleLinear()
     .domain([
       this.props.variable.low, 
-      (this.props.variable.high - this.props.variable.low)/(2.0), 
+      (this.props.variable.high + this.props.variable.low)/(2.0), 
       this.props.variable.high, 
-    ]).range([HIGHCOLOR, MIDCOLOR, LOWCOLOR])
+    ]).range([LOWCOLOR, MIDCOLOR, HIGHCOLOR])
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
     if(this.state.forceUpdate){
