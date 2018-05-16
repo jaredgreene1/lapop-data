@@ -131,19 +131,17 @@ export class InputPanel extends Component {
     configs = () => {
       return {
         map: [
+          this.selectVar('Variable', this.props.setIndepVar, false, this.props.indepVar),
           this.year, 
           this.unit, 
-          this.selectVar('Variable', this.props.setIndepVar, false, this.props.indepVar),
         ],
         scatter: [
+          this.selectVar('X variable', this.props.setIndepVar, false, this.props.indepVar),
+          this.selectVar('Y variable', this.props.setDepVar, false, this.props.depVar), 
           this.year, 
           this.unit, 
-          this.selectVar('X variable', this.props.setIndepVar, false, this.props.indepVar),
-          this.selectVar('Y variable', this.props.setDepVar, false, this.props.depVar) 
         ],
         stats: [
-          this.year, 
-          this.unit, 
           this.selectVar(
             'Dependent variable', 
             this.props.setDepVar, 
@@ -156,6 +154,8 @@ export class InputPanel extends Component {
             true, 
             Object.values(this.props.exogVars).map(v => {return {label: v.label, value: v.code}})
           ), 
+          this.year, 
+          this.unit, 
         ],
       }
     }
