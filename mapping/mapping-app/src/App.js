@@ -35,8 +35,8 @@ class App extends Component {
   resetInvalidVars = (year) => {
     const vars = getVars(year)
     this.setState({
-      depVar: vars[this.state.depVar] || vars['pol1'],
-      indepVar: vars[this.state.indepVar] || vars['www1'],
+      depVar: vars[this.state.depVar.code] || vars['pol1'],
+      indepVar: vars[this.state.indepVar.code] || vars['www1'],
       exogVars: this.state.exogVars.map(val => vars[val.code] || vars['www1'])
     })
   }
