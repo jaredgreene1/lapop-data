@@ -72,6 +72,7 @@ class Section extends Component {
           onClick = {this.handleClick} 
           style={this.introDiv()}
         >
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <text style={ this.title() }> 
             { this.props.title } 
           </text>
@@ -79,6 +80,7 @@ class Section extends Component {
             <text style={ this.arrow() }> ⌃ </text> : 
             <text style={ this.arrow() }> ⌄  </text> 
           }
+          </div>
 
           { this.state.expanded &&
                <div style = { this.expandedText() }>

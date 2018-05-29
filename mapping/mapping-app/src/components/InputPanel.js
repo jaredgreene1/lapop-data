@@ -36,7 +36,7 @@ export class InputPanel extends Component {
 
   chart = () =>
           <div name='chart' style={question}>
-            <text> { this.copy().output } </text>
+            <text> { this.copy().output }: </text>
             <ButtonGroup onChange={this.props.setView} value={ this.props.view }>
               <Button value={'scatter'}> 
                 { this.copy().scatter }
@@ -52,7 +52,7 @@ export class InputPanel extends Component {
 
   year = () =>  
           <div name='year' style={question}>
-            <text> { this.copy().year } </text>
+            <text> { this.copy().year }: </text>
               <ButtonGroup onChange={this.props.setYear} value={ this.props.year }>
                 <Button value={2014}> 2014 </Button>
                 <Button value={2017}> 2017 </Button>
@@ -131,7 +131,7 @@ export class InputPanel extends Component {
 
   unit = () => 
           <div name='unit' style={question}>
-            <text> Unit: </text>
+            <text> {this.copy().unit}: </text>
             <ButtonGroup onChange={this.props.setUnit} value={ this.props.unit }>
               <Button value={'departamento'}> Dept </Button>
               <Button value={'municipio'}> Muni </Button>
@@ -141,7 +141,7 @@ export class InputPanel extends Component {
     configs = () => {
       return {
         map: [
-          this.selectVar(this.copy().variable, this.props.setIndepVar, false, this.props.indepVar),
+          this.selectVar(this.copy().variable + ':', this.props.setIndepVar, false, this.props.indepVar),
           this.year, 
           this.unit, 
         ],

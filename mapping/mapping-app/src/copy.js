@@ -80,9 +80,10 @@ const introText_en = {
 
           <br /> <br /> 
 
-          For more information regarding LAPOP or The AmericasBarometer 
-          <a target='_blank' href='https://www.vanderbilt.edu/lapop/'> visit their website </a> 
-          where you can read more about the survey methodology
+          For more information regarding LAPOP or The AmericasBarometer <a 
+              target='_blank' href='https://www.vanderbilt.edu/lapop/'> 
+              visit their website 
+          </a> where you can read more about the survey methodology
           and download the raw data that supports this application
         </text>
       </div>),
@@ -101,10 +102,11 @@ const introText_en = {
 
           <br /> <br />
 
-          For more information take a look at the 
-          <a target='_blank' href='http://www.NetworksOfGuatemala.com'> Networks of Guatemala Blog </a>
-          or reach out to our PI, 
-          <a href='mailto:JaredGreene1@gmail.com'> Jared Greene </a>.
+          For more information take a look at 
+          the <a target='_blank' href='http://www.NetworksOfGuatemala.com'>
+                Networks of Guatemala Blog
+              </a> or reach out to our PI, <a href='mailto:JaredGreene1@gmail.com'>
+              Jared Greene</a>.
         </text>
       </div>)
   }
