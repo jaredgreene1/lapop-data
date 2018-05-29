@@ -6,7 +6,7 @@ const activeButton = {
   border: '1px solid #aeaef375',
   padding: '7px 4px',
   width: '80px',
-  background: '#ebeeff73',
+  background: '#057cfad6',
   color: '#ffffff',
   cursor: 'pointer',
 }
@@ -16,8 +16,8 @@ const button = {
   border: '1px solid #aeaef375',
   padding: '7px 4px',
   width: '80px',
-  background: '#ebeeff0a',
-  color: '#ffffff87',
+  background: '#ffffff38',
+  color: '#5eabfdfa',
   cursor: 'pointer',
 }
 export class Button extends React.Component {

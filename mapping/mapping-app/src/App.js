@@ -4,16 +4,17 @@ import normalize from 'normalize.css';
 
 import { InputPanel } from './components/InputPanel';
 import { OutputPanel } from './components/OutputPanel.js';
+import IntroInfo from './components/IntroInfo.js';
 import { getVars } from './data/varcoding.js';
 
 
 const section1 = {
   backgroundSize: 'cover',
-  background: 'linear-gradient(to right bottom, rgb(1, 1, 18), rgba(79, 79, 179, 0.81))',
+  background: 'linear-gradient(to right bottom, #ffffff, #dbdbedcf',
   padding: '30px',
   minHeight: '100vh',
   boxSizing: 'border-box',
-  color: 'white',
+  color: '#19191a',
   padding: '15px',
   overflow: 'auto',
 }
@@ -70,8 +71,9 @@ class App extends Component {
     return(
       <div name='background' >
         <section name='section1' style={ section1 }>
-          <h1> LAPOP Explorer - Guatemala </h1>
+          <h1> Networks of Guatemala - Data Explorer </h1>
           <hr />
+          <IntroInfo />
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
             <InputPanel {...this.callbacks()} {...this.state} /> 
             <OutputPanel {...this.state}/> 
