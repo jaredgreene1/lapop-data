@@ -9,6 +9,7 @@ const activeButton = {
   background: '#057cfad6',
   color: '#ffffff',
   cursor: 'pointer',
+  borderRadius: '4px',
 }
 
 const button = {
@@ -17,8 +18,9 @@ const button = {
   padding: '7px 4px',
   width: '80px',
   background: '#ffffff38',
-  color: '#5eabfdfa',
+  color: 'rgba(66, 107, 151, 0.68)',
   cursor: 'pointer',
+  borderRadius: '4px',
 }
 export class Button extends React.Component {
   constructor(props) {
