@@ -23,13 +23,14 @@ class App extends Component {
   constructor() {
     super()
     this.state ={
-      view: 'scatter',
+      view: 'map',
       depVar: getVars('2017')['pol1'], 
-      indepVar: getVars('2017')['www1'], 
+      indepVar: getVars('2017')['indig'], 
       exogVars: [getVars('2017')['www1'], getVars('2017')['prot3']], 
-      unit: 'municipio',
+      unit: 'departamento',
       year: '2017',
-      vars: getVars('2017')
+      vars: getVars('2017'),
+      lang: 'en',
   }
 }
 
@@ -73,7 +74,7 @@ class App extends Component {
         <section name='section1' style={ section1 }>
           <h1> Networks of Guatemala - Data Explorer </h1>
           <hr />
-          <IntroInfo />
+          <IntroInfo lang={ this.state.lang }/>
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
             <InputPanel {...this.callbacks()} {...this.state} /> 
             <OutputPanel {...this.state}/> 

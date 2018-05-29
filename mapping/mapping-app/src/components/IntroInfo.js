@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import { introText } from '../copy';
 
 const intro = {
   display: 'flex',
@@ -79,22 +80,22 @@ class Section extends Component {
         }
 
         { this.state.expanded &&
-          <p style = { this.expandedText() }>
-            { this.props.text }
-          </p>
+             <div style = { this.expandedText() }>
+              { this.props.text }
+             </div>
+
         }
       </div>
   )}
 }
 
 
-const IntroInfo = () => { 
+const IntroInfo = props => { 
      return (
          <div name='introPanel' style={ intro }>
-            <Section title='About this application' text='This application is part of a research project called Networks of Guatemala' /> 
-            <Section title='Instructions for use' text='In the view panel, select a data view. Then, confgure the visualization by toggling the data in the configuration panel' /> 
-            <Section title='Data source' text='This data is from the America Barometers survey effort run by LAPOP' /> 
-            <h />
+          {Object.keys(introText(props.lang)).map(key => 
+            <Section title={ key } text={ introText(props.lang)[key] }/>)
+          }
         </div>
         )
      }
