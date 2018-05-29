@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import Select from 'react-select';
+
 import { getData } from '../data/data';
 import { ButtonGroup, Button, ExpandableSelect } from './Input';
-import Select from 'react-select';
+import { inputText } from '../copy'
 
 const inputPanel= {
   display: 'flex',
@@ -30,19 +32,27 @@ export class InputPanel extends Component {
     super()
   }
 
+  copy = () => inputText(this.props.lang)
+
   chart = () =>
           <div name='chart' style={question}>
-            <text> Output chart: </text>
+            <text> { this.copy().output } </text>
             <ButtonGroup onChange={this.props.setView} value={ this.props.view }>
-              <Button value={'scatter'}> Scatter </Button>
-              <Button value={'map'}> Map </Button>
-              <Button value={'stats'}> Analyze </Button>
+              <Button value={'scatter'}> 
+                { this.copy().scatter }
+              </Button>
+              <Button value={'map'}> 
+                { this.copy().map }
+              </Button>
+              <Button value={'stats'}>
+                {this.copy().stats }
+              </Button>
             </ButtonGroup>
           </div>
 
   year = () =>  
           <div name='year' style={question}>
-            <text> Year: </text>
+            <text> { this.copy().year } </text>
               <ButtonGroup onChange={this.props.setYear} value={ this.props.year }>
                 <Button value={2014}> 2014 </Button>
                 <Button value={2017}> 2017 </Button>
@@ -131,7 +141,7 @@ export class InputPanel extends Component {
     configs = () => {
       return {
         map: [
-          this.selectVar('Variable', this.props.setIndepVar, false, this.props.indepVar),
+          this.selectVar(this.copy().variable, this.props.setIndepVar, false, this.props.indepVar),
           this.year, 
           this.unit, 
         ],
@@ -164,12 +174,12 @@ export class InputPanel extends Component {
     return(
       <div name='inputPanel' style={inputPanel}>
         
-        <text style={{margin: '-38px 0px 7px 0px'}}> View </text>
+        <text style={{margin: '-38px 0px 7px 0px'}}> { this.copy().view }</text>
         <div name='view' style={{padding: '10px', margin: '5px', boxShadow: '#007cff 0px 0px 3px', borderRadius: '4px'}}>
           {this.chart()}
         </div>
 
-        <text style={{margin: '10px 0px 7px 0px'}}> Configuration </text>
+        <text style={{margin: '10px 0px 7px 0px'}}> { this.copy().config } </text>
         <div name='config' style={{padding: '10px', margin: '5px',  boxShadow: '#007cff 0px 0px 3px', borderRadius: '4px'}}>
           {this.configs()[this.props.view].map(input => input())}
         </div>

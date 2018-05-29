@@ -2,18 +2,43 @@ import React from 'react';
 
 //Contains text for application - largest use case is language switching
 
+export const title = lang => 
+  lang == 'en' ? title_en : title_es
 
-export const introText = lang => {
-  switch(lang) {
-    case 'en':
-      return introText_en
-    case 'es':
-      return introText_es
-    default:
-      throw "Invalid language";
-  }
+export const inputText = lang => 
+  lang == 'en' ? inputText_en: inputText_es 
+
+export const introText = lang => 
+  lang == 'en' ? introText_en : introText_es
+
+
+
+const title_en = 'Networks of Guatemala - Data Explorer'
+const title_es = 'Networks of Guatemala - Explorador de Datos'
+
+const inputText_en = {
+  view: "View",
+  map: "Map",
+  scatter: "Scatter",
+  stats: "Analysis",
+  config: "Configuration",
+  output: "Output chart",
+  variable: "Variable",
+  year: "Year",
+  unit: "Unit",
 }
 
+const inputText_es = {
+  view: "Vista",
+  map: "Mapa",
+  scatter: "Gráfico",
+  stats: "Análisis",
+  config: "Configuración",
+  output: "Gráfico de salida",
+  variable: "Variable",
+  year: "Año",
+  unit: "Unidad",
+}
 
 
 const introText_en = {
@@ -84,4 +109,8 @@ const introText_en = {
       </div>)
   }
 
-const introText_es = {}
+const introText_es = {
+  'Esta aplicación': 'hola mis amigos!',
+  'Funte de datos': 'El baso de datos es de LAPOP',
+  'Quien es?': 'Soy el jefe!'
+  }
