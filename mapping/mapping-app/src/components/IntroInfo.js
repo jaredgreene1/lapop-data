@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { introText } from '../copy';
-import { ButtonGroup, Button } from './Input';
 
 const intro = {
   display: 'flex',
@@ -93,21 +92,11 @@ class Section extends Component {
 }
 
 
-const IntroInfo = props => { 
-     return (
-      <div>
-        <ButtonGroup onChange={ props.setLang } value={ props.lang }>
-          <Button value={'en'}> English </Button>
-          <Button value={'es'}> Español </Button>
-        </ButtonGroup>
-      
+const IntroInfo = props =>  
        <div name='introPanel' style={ intro }>
-        {Object.keys(introText(props.lang)).map(key => 
-          <Section title={ key } text={ introText(props.lang)[key] }/>)
-        }
-      </div>
-    </div>
-        )
-     }
+          {Object.keys(introText(props.lang)).map(key => 
+            <Section title={ key } text={ introText(props.lang)[key] }/>)
+          }
+        </div>
 
   export default IntroInfo;

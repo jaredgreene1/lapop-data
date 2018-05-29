@@ -6,6 +6,8 @@ import { InputPanel } from './components/InputPanel';
 import { OutputPanel } from './components/OutputPanel.js';
 import IntroInfo from './components/IntroInfo.js';
 import { getVars } from './data/varcoding.js';
+import { title } from './copy';
+import { ButtonGroup, Button } from './components/Input'; 
 
 
 const section1 = {
@@ -75,9 +77,15 @@ class App extends Component {
     return(
       <div name='background' >
         <section name='section1' style={ section1 }>
-          <h1> Networks of Guatemala - Data Explorer </h1>
+				<div style={{display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+          <h2> { title(this.state.lang) } </h2>
+					<ButtonGroup onChange={ this.callbacks().setLang } value={ this.state.lang }>         
+						<Button value={'en'}> English </Button>                          
+						<Button value={'es'}> Español </Button>                          
+					</ButtonGroup>
+				</div>
           <hr />
-          <IntroInfo { ...this.callbacks() } { ...this.state }/>
+          <IntroInfo { ...this.state }/>
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
             <InputPanel {...this.callbacks()} {...this.state} /> 
             <OutputPanel {...this.state}/> 
