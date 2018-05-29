@@ -24,20 +24,21 @@ const section1 = {
 class App extends Component {
   constructor() {
     super()
+    const lang = navigator.language.substr(0,2) == 'es' ? 'es' : 'en'
     this.state ={
       view: 'map',
-      depVar: getVars('2017')['pol1'], 
-      indepVar: getVars('2017')['indig'], 
-      exogVars: [getVars('2017')['www1'], getVars('2017')['prot3']], 
+      depVar: getVars('2017', lang)['pol1'], 
+      indepVar: getVars('2017', lang)['indig'], 
+      exogVars: [getVars('2017', lang )['www1'], getVars('2017', lang)['prot3']], 
       unit: 'departamento',
       year: '2017',
-      vars: getVars('2017'),
-      lang: 'en',
+      vars: getVars('2017', lang),
+      lang: lang,
   }
 }
 
   resetInvalidVars = (year) => {
-    const vars = getVars(year)
+    const vars = getVars(year, this.state.lang)
     this.setState({
       depVar: vars[this.state.depVar.code] || vars['pol1'],
       indepVar: vars[this.state.indepVar.code] || vars['www1'],
@@ -61,14 +62,17 @@ class App extends Component {
         this.resetInvalidVars(year)
         this.setState({ 
           year: year,
-          vars: getVars(year)
+          vars: getVars(year, this.state.lang)
         })
       },
       setExogVars: exogVars => {
         this.setState({exogVars: exogVars.map(({value, label}) => this.state.vars[value])})
       },
       setLang: lang => {
-        this.setState({lang: lang})
+        this.setState({
+          lang: lang,
+          vars: getVars(this.state.year, lang)
+        })
       }
     }
   }
