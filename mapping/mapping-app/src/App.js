@@ -65,6 +65,9 @@ class App extends Component {
       setExogVars: exogVars => {
         this.setState({exogVars: exogVars.map(({value, label}) => this.state.vars[value])})
       },
+      setLang: lang => {
+        this.setState({lang: lang})
+      }
     }
   }
 
@@ -74,7 +77,7 @@ class App extends Component {
         <section name='section1' style={ section1 }>
           <h1> Networks of Guatemala - Data Explorer </h1>
           <hr />
-          <IntroInfo lang={ this.state.lang }/>
+          <IntroInfo { ...this.callbacks() } { ...this.state }/>
           <div style={{display: 'flex', flexWrap:'wrap'}}> 
             <InputPanel {...this.callbacks()} {...this.state} /> 
             <OutputPanel {...this.state}/> 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { introText } from '../copy';
+import { ButtonGroup, Button } from './Input';
 
 const intro = {
   display: 'flex',
@@ -66,25 +67,27 @@ class Section extends Component {
 
   render() {
     return (
-      <div 
-        name='intro_section' 
-        onClick = {this.handleClick} 
-        style={this.introDiv()}
-      >
-        <text style={ this.title() }> 
-          { this.props.title } 
-        </text>
-        { this.state.expanded ? 
-          <text style={ this.arrow() }> ⌃ </text> : 
-          <text style={ this.arrow() }> ⌄  </text> 
-        }
+      <div>
+        <div 
+          name='intro_section' 
+          onClick = {this.handleClick} 
+          style={this.introDiv()}
+        >
+          <text style={ this.title() }> 
+            { this.props.title } 
+          </text>
+          { this.state.expanded ? 
+            <text style={ this.arrow() }> ⌃ </text> : 
+            <text style={ this.arrow() }> ⌄  </text> 
+          }
 
-        { this.state.expanded &&
-             <div style = { this.expandedText() }>
-              { this.props.text }
-             </div>
+          { this.state.expanded &&
+               <div style = { this.expandedText() }>
+                { this.props.text }
+               </div>
 
-        }
+          }
+        </div>
       </div>
   )}
 }
@@ -92,11 +95,18 @@ class Section extends Component {
 
 const IntroInfo = props => { 
      return (
-         <div name='introPanel' style={ intro }>
-          {Object.keys(introText(props.lang)).map(key => 
-            <Section title={ key } text={ introText(props.lang)[key] }/>)
-          }
-        </div>
+      <div>
+        <ButtonGroup onChange={ props.setLang } value={ props.lang }>
+          <Button value={'en'}> English </Button>
+          <Button value={'es'}> Español </Button>
+        </ButtonGroup>
+      
+       <div name='introPanel' style={ intro }>
+        {Object.keys(introText(props.lang)).map(key => 
+          <Section title={ key } text={ introText(props.lang)[key] }/>)
+        }
+      </div>
+    </div>
         )
      }
 
