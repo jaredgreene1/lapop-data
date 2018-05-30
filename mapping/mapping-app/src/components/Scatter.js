@@ -49,7 +49,7 @@ export class ScatterChart extends Component {
     return {
       labels: ['scatter'],
       datasets: [{
-        label: 'America Barometers Data',
+        label: '',
         backgroundColor: '#FFF',
         pointBackgroundColor: '#057cfa',
         borderColor: '#FFF',

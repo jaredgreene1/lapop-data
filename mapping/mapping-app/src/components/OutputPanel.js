@@ -92,8 +92,6 @@ export class OutputPanel extends Component {
   }
 
   static getDerivedStateFromProps = (nxtProps, curState) => {
-    console.log(nxtProps)
-    console.log(curState)
     if(nxtProps.year == curState.year && nxtProps.unit == curState.unit)
       return
     else
@@ -116,6 +114,7 @@ export class OutputPanel extends Component {
                   this.props.indepVar)}
             vars={ this.props.vars }
             data={ this.state.data }
+            lang={ this.props.lang }
           />
         }
 
@@ -133,6 +132,7 @@ export class OutputPanel extends Component {
             {...statsData(this.props.depVar, 
                   this.props.exogVars,
                   this.state.data)}
+            lang={ this.props.lang }
           />
         }
 

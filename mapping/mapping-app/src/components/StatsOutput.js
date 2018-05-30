@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { statsText } from '../copy.js';
 
 
 const output = {
@@ -21,7 +22,7 @@ export class StatsOutput extends Component {
       return(                                    
         <div>                                                             
           <h1 style={{margin: '15%', textAlign: 'center'}}>    
-            Please select one dependent variable and at least 2 independent variables 
+            { statsText(this.props.lang).varsRequired }
           </h1>                                                           
         </div>)   
 		return(
@@ -31,17 +32,17 @@ export class StatsOutput extends Component {
               paddingBottom: '5px', 
               margin:'0'
         }}> 
-          { 'Ordinary Least Squared Analysis' } 
+          { statsText(this.props.lang).olsTitle }
         </h3>
         <br />
-        <b> Model information: </b>
+        <b> { statsText(this.props.lang).modelInfo }: </b>
         <br />
-        <p style={outputSect}> Dependent variable: 
+        <p style={outputSect}> { statsText(this.props.lang).depVar }:
           <ul style={output}>
             <li> { this.props.endogVar.label } </li>
           </ul>
         </p>
-        <p style={outputSect}> Independent variables:
+        <p style={outputSect}> { statsText(this.props.lang).indepVar }:
           <ul>
             { this.props.exogVars.map((xVar, idx) => 
                 <li style={output}> {xVar.label} </li>)
@@ -50,15 +51,17 @@ export class StatsOutput extends Component {
         </p> 
 
         <br />
-        <b> Analysis: </b>
-        <p style={outputSect}> R-squared: 
+        <br />
+
+        <b> { statsText(this.props.lang).analysis }: </b>
+        <p style={outputSect}> { statsText(this.props.lang).rSquared }:
           <ul>
             <li style={output}> 
               {this.props.output.R2.toFixed(3)} 
             </li>
           </ul>
         </p>  
-        <p style={outputSect}> Coefs: 
+        <p style={outputSect}> { statsText(this.props.lang).coefs }:
           <ul>
             { this.props.output.coef.map((coef, idx) =>
                 <li style={output}> 

@@ -120,7 +120,8 @@ export class Map extends Component {
                 expanded={ this.state.clicked }
                 vars={ this.props.vars }
                 collapse={ this.handleClick }
-                />
+                lang={ this.props.lang }
+              />
             }
             <div id='chart-output' style={{display: 'flex', width: '100%', height: '100%', overflow: 'hidden'}}>
               <ComposableMap 

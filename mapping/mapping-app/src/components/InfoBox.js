@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { infoBoxText } from '../copy.js';
 
 const collapsed = {
   boxShadow: '4px 4px 32px -13px black',
@@ -60,11 +61,11 @@ class ExpandedInfoBox extends Component {
       <div style={ expanded }> 
         <p style={{gridArea: 'top', borderBottom: '1px solid white' }}> 
           <span style={{margin: '5px', marginRight:'15px'}}> 
-            <b> Department: </b> { dept } 
+            <b> { infoBoxText(this.props.lang).dept }: </b> { dept } 
           </span>
           { muni && 
             <span> 
-              <b> Municipality: </b> { muni } 
+              <b> { infoBoxText(this.props.lang).muni }: </b> { muni } 
             </span>
           }
         </p>
@@ -78,7 +79,7 @@ class ExpandedInfoBox extends Component {
                   </span>
                 </p>)} 
             </span>
-            : <span> No data available </span>
+            : <span> { infoBoxText(this.props.lang).noData } </span>
           }
         </div>
       </div>
@@ -96,14 +97,15 @@ class CollapsedInfoBox extends Component {
     const variable = this.props.variable
     const value = data[variable.code]
     const vars = this.props.vars
+    const lang = this.props.lang
 
     return(
       <div style={ collapsed }>
-        <p> <b> Department: </b> { dept } </p>
-        { muni && <p> <b> Municipality: </b> { muni } </p> }
+        <p> <b> { infoBoxText(lang).dept }: </b> { dept } </p>
+        { muni && <p> <b> { infoBoxText(lang).muni }: </b> { muni } </p> }
         { value ? 
             <p> { variable.label } : { value.toFixed(2) } out of { variable.high } </p>
-            : <p> No data available </p>}
+            : <p> { infoBoxText(lang).noData }</p>}
       </div>
     )
   }

@@ -1,6 +1,5 @@
-import React from 'react';
-
 //Contains text for application - largest use case is language switching
+import React from 'react';
 
 export const title = lang => 
   lang == 'en' ? title_en : title_es
@@ -11,11 +10,58 @@ export const inputText = lang =>
 export const introText = lang => 
   lang == 'en' ? introText_en : introText_es
 
+export const infoBoxText = (lang) => 
+  (lang == 'en' ? infoBox_en : infoBox_es)
+
+export const statsText = (lang) => 
+  (lang == 'en' ? statsView_en : statsView_es)
 
 
+
+/**********Title copy**********/
 const title_en = 'Networks of Guatemala - Data Explorer'
 const title_es = 'Networks of Guatemala - Explorador de Datos'
 
+
+/**********Stats View copy**********/
+const statsView_en = {
+  olsTitle: "Ordinary Least Squared Analysis",
+  depVar: "Dependent variable",
+  indepVar: "Independent variables",
+  analysis: "Analysis",
+  rSquared: "R-squared",
+  modelInfo: "Model information",
+  coefs: "Coefficients",
+  varsRequired: `Please select one dependent variable and two 
+                  or more independent variables`
+}
+const statsView_es = {
+  olsTitle: "ESP Ordinary Least Squared Analysis",
+  depVar: "ESP Dependent variable",
+  indepVar: "ESP Independent variables",
+  analysis: "Análisis",
+  rSquared: "ESP R-squared",
+  modelInfo: "ESP Model information",
+  coefs: "ESP Coefficients",
+  varsRequired: `Elige un variable dependente y dos o más 
+                  variables independente por favor`
+}
+
+
+/**********Info Box copy**********/
+const infoBox_en = {
+  dept: "State",
+  muni: "Town",
+  noData: "No surveys conducted in this area",
+}
+const infoBox_es = {
+  dept: "Departamento",
+  muni: "Municipalidad",
+  noData: "No era ninguna colleción en esta lugar",
+}
+
+
+/**********Input Panel copy**********/
 const inputText_en = {
   view: "View",
   map: "Map",
@@ -41,6 +87,8 @@ const inputText_es = {
 }
 
 
+
+/**********Intro Information copy**********/
 const introText_en = {
   'About this application': (
       <div>
