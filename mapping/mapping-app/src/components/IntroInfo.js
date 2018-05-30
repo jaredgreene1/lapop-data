@@ -20,10 +20,10 @@ const intro = {
 
 
 class Section extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      expanded: false
+      expanded: this.props.expanded 
     }
   }
 
@@ -96,8 +96,12 @@ class Section extends Component {
 
 const IntroInfo = props =>  
        <div name='introPanel' style={ intro }>
-          {Object.keys(introText(props.lang)).map(key => 
-            <Section title={ key } text={ introText(props.lang)[key] }/>)
+          {Object.keys(introText(props.lang)).map( (key, idx) => 
+            <Section 
+              title={ key } 
+              text={ introText(props.lang)[key] }
+              expanded={ !idx }
+            />)
           }
         </div>
 
