@@ -54,6 +54,7 @@ class Section extends Component {
     return {
       float: 'right',
       fontSize: 'x-large',
+      cursor: 'pointer',
     }
   }
 
@@ -67,28 +68,27 @@ class Section extends Component {
   render() {
     return (
       <div>
-        <div 
-          name='intro_section' 
-          onClick = {this.handleClick} 
-          style={this.introDiv()}
-        >
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <text style={ this.title() }> 
-            { this.props.title } 
-          </text>
-          { this.state.expanded ? 
-            <text style={ this.arrow() }> ⌃ </text> : 
-            <text style={ this.arrow() }> ⌄  </text> 
-          }
+        <div name='intro_section' style={this.introDiv()}>
+          <div 
+            onClick = {this.handleClick} 
+            style={{display: 'flex', justifyContent: 'space-between'}}
+          >
+            <text style={ this.title() }> 
+              { this.props.title } 
+            </text>
+            { this.state.expanded ? 
+              <text style={ this.arrow() }> ⌃ </text> : 
+              <text style={ this.arrow() }> ⌄  </text> 
+            }
+            </div>
+
+            { this.state.expanded &&
+                 <div style = { this.expandedText() }>
+                  { this.props.text }
+                 </div>
+
+            }
           </div>
-
-          { this.state.expanded &&
-               <div style = { this.expandedText() }>
-                { this.props.text }
-               </div>
-
-          }
-        </div>
       </div>
   )}
 }

@@ -158,9 +158,63 @@ const introText_en = {
         </text>
       </div>)
   }
-
 const introText_es = {
-  'Esta aplicación': 'hola mis amigos!',
-  'Funte de datos': 'El baso de datos es de LAPOP',
-  'Quien es?': 'Soy el jefe!'
+  'Esta aplicación': (
+      <div>
+        <text> 
+          ¡Bienvenido a Networks of Guatemala Data Explorer!
+          <br /> <br />
+          NoG Data Explorer se utiliza para realizar una visualización y 
+          análisis de datos básicos para la información de la población 
+          en todo Guatemala.
+          <br /> <br />
+          Comience por seleccionar una vista y sus variables de 
+          configuración en el panel a continuación. Siéntase libre de 
+          hacer clic en este menú para obtener más información sobre las 
+          diferentes vistas, proyectos y datos. ¡Que te diviertas!
+        </text>
+      </div>),
+  'Funte de datos': (
+      <div>
+        <text>
+					
+					Los conjuntos de datos que admiten NoG Data Explorer provienen 
+					de la Encuesta del Barómetro de las Américas, que es ejecutada 
+					por el Proyecto de Opinión Pública de América Latina (LAPOP).
+          <br /> <br />
+					El Barómetro de las Américas es una encuesta comparativa 
+					científicamente rigurosa que cubre todo el Norte, Centro y 
+					Sudamérica. En el caso de Guatemala, LAPOP ha estado ejecutando 
+					la recolección de datos cada dos años desde 1992.
+          <br /> <br />
+					Para obtener más información sobre LAPOP o el Barómetro de las 
+					Américas, <a
+						target='_blank' href='https://www.vanderbilt.edu/lapop/'> 
+							visite su sitio web 
+					</a> donde puede leer más sobre la 
+					metodología de la encuesta y descargar los datos brutos que 
+					admiten esta aplicación.
+        </text>
+      </div>),
+   'Quien samos?': (
+      <div>
+        <text>
+					Esta aplicación es parte de un proyecto de investigación en 
+					curso llamado Redes de Guatemala que investiga el impacto que 
+					el rendimiento de Internet tiene en el compromiso político de 
+					las comunidades indígenas.
+          <br /> <br />
+					El proyecto cuenta con el respaldo de Vint Cerf y The Marconi 
+					Society a través de una subvención de investigación de Internet 
+					y Democracia, y se realizará entre enero de 2018 y diciembre 
+					de 2018.
+          <br /> <br />
+					Para obtener más información, eche un vistazo 
+					al <a target='_blank' href='http://www.NetworksOfGuatemala.com'>
+						Blog de Redes de Guatemala 
+					</a> o comuníquese con nuestro Investigador Principal, <a
+						href='mailto:JaredGreene1@gmail.com'>Jared Greene</a>.
+        </text>
+      </div>)
   }
+
