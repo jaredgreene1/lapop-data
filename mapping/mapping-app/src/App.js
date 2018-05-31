@@ -37,8 +37,8 @@ class App extends Component {
   }
 }
 
-  resetInvalidVars = (year) => {
-    const vars = getVars(year, this.state.lang)
+  resetInvalidVars = (year, lang) => {
+    const vars = getVars(year, lang)
     this.setState({
       depVar: vars[this.state.depVar.code] || vars['pol1'],
       indepVar: vars[this.state.indepVar.code] || vars['www1'],
@@ -48,18 +48,16 @@ class App extends Component {
 
   callbacks = () => {
     return {
-      setDepVar: ({value, label}) => {
-        this.setState({depVar: this.state.vars[value]})
-      },
-      setIndepVar: ({value, label}) => {
-        this.setState({indepVar: this.state.vars[value]})
-      },
-      setView: view => this.setState({ view: view }),
-      setUnit: unit => {
-        this.setState({ unit: unit })
-      },
+      setDepVar: ({value}) =>
+        this.setState({depVar: this.state.vars[value]}),
+      setIndepVar: ({value}) =>
+        this.setState({indepVar: this.state.vars[value]}),
+      setView: view => 
+        this.setState({ view: view }),
+      setUnit: unit =>
+        this.setState({ unit: unit }),
       setYear: year => {
-        this.resetInvalidVars(year)
+        this.resetInvalidVars(year, this.state.lang)
         this.setState({ 
           year: year,
           vars: getVars(year, this.state.lang)
@@ -73,6 +71,7 @@ class App extends Component {
           lang: lang,
           vars: getVars(this.state.year, lang)
         })
+        this.resetInvalidVars(this.state.year, lang)
       }
     }
   }
