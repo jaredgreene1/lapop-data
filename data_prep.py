@@ -7,39 +7,6 @@ data_files = {
   '2017': 'data/CLEAN_GT_2017.dta'
 }
 
-''' def _map_cleaning(dtaFile, topoFile, grouping):
-  Takes a topoJSON file (like that created with mapshaper.com),
-    and makes the muni and department codes match those in the .dta
-    json file
-    
-    this is meant as a one-off when prepping data that will be
-    paired with the mapping-app. This is very specific but is being
-    places in this file so we don't have cleaning functions all over 
-    the place.
-
-  import json 
-
-  with open(topoFile) as tf:
-    topo_dict = json.load(tf)
-    
-    data = get_data(grouping=grouping)
-
-    for i in range(len(data)):
-        shape = list(lambda geo: (geo['properties']['NAME_1'] + ', ' + 
-          geo['properties']['NAME_0']) == data.municipio[i],
-          topo_dict['object']['GTM_adm2']['geometries']
-      )
-
-      if len(shape) != 1:
-        raise("issue! No match found for {}", data[i])
-
-      
-      topo_dict['object']['GTM_adm2']['geometries']
-'''
-
-
-
-  
 
 def _muni_to_prov(code):
   '''Parses the department coding from the muni coding'''
